@@ -1,17 +1,16 @@
-import {
-  EyeClosed,
-  EyeIcon,
-  LockKeyhole,
-  Mail,
-  User2Icon,
-  XCircle,
-} from "lucide-react";
-import { Link } from "react-router-dom";
+import { LockKeyhole, Mail, User2Icon, XCircle } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { signupSchema } from "../../utils/validation/validationSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../../components/general_ui_components/Input";
+import { registerUser } from "../../feature/auth/authThunk";
+import { useDispatch, useSelector } from "react-redux";
+import { Waveform } from "ldrs/react";
+import "ldrs/react/Waveform.css";
+
+// Default values shown
 
 function Signup() {
   const {
@@ -22,13 +21,19 @@ function Signup() {
     resolver: yupResolver(signupSchema),
   });
 
-  const onsubmit = async (data) => {
-    console.log(data);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, status, error } = useSelector((state) => state.auth);
+
+  const handleSignup = async (data) => {
+    const user = await dispatch(registerUser(data));
+    if (user?.payload) {
+      navigate("/home");
+    }
   };
 
   return (
     <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center px-6 justify-center">
-      {/* form */}
       <motion.div
         initial={{ y: 80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -38,12 +43,11 @@ function Signup() {
         <Link to="/" className="absolute top-4 right-4">
           <XCircle className="cursor-pointer h-6 w-6 text-red-500" />
         </Link>
-        <h2 className="text-2xl text-center font-bold  mb-2">Sign up</h2>
-
+        <h2 className="text-2xl text-center font-bold mb-2">Sign up</h2>
         <p className="text-center text-md">Welcome to the Chat App!</p>
+        {error && <p className="text-center text-sm text-red-500">{error}</p>}
 
-        <form onSubmit={handleSubmit(onsubmit)}>
-          {/* Name */}
+        <form onSubmit={handleSubmit(handleSignup)}>
           <Input
             name="name"
             label="Name"
@@ -53,8 +57,6 @@ function Signup() {
             type="text"
             Icon={User2Icon}
           />
-
-          {/* Email */}
           <Input
             name="email"
             label="Email"
@@ -64,7 +66,6 @@ function Signup() {
             Icon={Mail}
             error={errors?.email?.message}
           />
-          {/* password */}
           <Input
             name="password"
             label="Password"
@@ -74,7 +75,6 @@ function Signup() {
             Icon={LockKeyhole}
             error={errors?.password?.message}
           />
-          {/* confirm password */}
           <Input
             name="confirm_password"
             label="Confirm Password"
@@ -84,7 +84,6 @@ function Signup() {
             Icon={LockKeyhole}
             error={errors?.confirm_password?.message}
           />
-          {/* The Link */}
           <p className="text-center mt-4">
             Already have an account?{" "}
             <Link to="/login" className="text-blue-400">
@@ -95,7 +94,11 @@ function Signup() {
             type="submit"
             className="w-full px-4 py-2 rounded-full bg-orange-500 text-white font-bold mt-4"
           >
-            Register
+            {status === "loading" ? (
+              <Waveform size="35" stroke="3.5" speed="1" color="black" />
+            ) : (
+              "Register"
+            )}
           </button>
         </form>
       </motion.div>

@@ -50,7 +50,7 @@ function Hero() {
         >
           <div className="absolute top-10 lg:w-[400px] lg:h-[400px] md:w-[300px] md:h-[300px] w-[200px] h-[200px]  rounded-full bg-gradient-to-r from-orange-300 to-orange-600"></div>
           <img
-            src="../../../public/images/image3.png"
+            src="/images/image3.png"
             alt=""
             className="lg:w-[70%] md:w-[50%] h-auto  object-cover object-top rlative z-10"
           />

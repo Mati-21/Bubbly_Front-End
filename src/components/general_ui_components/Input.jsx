@@ -20,6 +20,18 @@ function Input({ register, name, label, placeholder, type, error, Icon }) {
           type={inputType}
           {...register(name)}
           name={name}
+          id={name}
+          autoComplete={
+            name === "name"
+              ? "name"
+              : name === "email"
+              ? "email"
+              : name === "password"
+              ? "new-password"
+              : name === "confirm_password"
+              ? "new-password"
+              : "off"
+          }
           placeholder={placeholder}
           className=" text-black px-4 py-1 bg-transparent w-full outline-none placeholder:text-slate-800 placeholder:text-sm"
         />

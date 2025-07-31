@@ -2,9 +2,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { motion } from "framer-motion";
 import { LockKeyhole, Mail, XCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginSchema } from "../../utils/validation/validationSchema";
 import Input from "../../components/general_ui_components/Input";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../feature/auth/authThunk";
+import { Waveform } from "ldrs/react";
+import "ldrs/react/Waveform.css";
 
 function Login() {
   const {
@@ -13,8 +17,15 @@ function Login() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(loginSchema) });
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { status } = useSelector((state) => state.auth);
+
   const onSubmit = async (data) => {
-    console.log(data);
+    const user = await dispatch(login(data));
+    if (user?.payload) {
+      navigate("/home");
+    }
   };
 
   return (
@@ -63,7 +74,11 @@ function Login() {
             </Link>
           </p>
           <button className="w-full px-4 py-2 rounded-full bg-orange-500 text-white font-bold mt-4">
-            Register
+            {status === "loading" ? (
+              <Waveform size="35" stroke="3.5" speed="1" color="black" />
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
       </motion.div>
