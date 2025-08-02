@@ -4,7 +4,7 @@ import Logo from "./Logo";
 
 function Navbar() {
   return (
-    <div className="sticky top-0 z-50 bg-violet-400 flex shadow-md  items-center col-span-12 h-16 font-bold text-14 md:text-20 lg:text-24  justify-between lg:px-20 md:px-10 px-6  py-2">
+    <div className=" bg-violet-400 flex shadow-md  items-center col-span-12 h-16 font-bold text-14 md:text-20 lg:text-24  justify-between lg:px-20 md:px-10 px-6 z-10 py-2">
       <motion.h1
         initial={{ x: -40, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
