@@ -6,6 +6,7 @@ import Landing from "./pages/landing/Landing";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "./feature/auth/authThunk";
+// import ScrollToTop from "./utils/ScrollToTop";
 
 function App() {
   const dispatch = useDispatch();

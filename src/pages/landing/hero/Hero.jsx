@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Hero() {
   return (
-    <div className="grid grid-cols-12 col-span-12 bg-gradient-to-br from-violet-400 to-violet-600 ">
+    <div className="grid  grid-cols-12 col-span-12 bg-gradient-to-br  from-violet-400 to-violet-600 ">
       {/* left side hero */}
       <div className="lg:col-span-6 order-2 lg:order-1 lg:space-y-8 lg:mt-20 col-span-12 flex flex-col px-2 md:px-4 lg:px-6">
         <motion.h1
@@ -41,7 +41,7 @@ function Hero() {
         </motion.div>
       </div>
       {/* Right side hero */}
-      <div className="lg:col-span-6 order-1 lg:order-2 col-span-12 flex items-center justify-center ">
+      <div className="lg:col-span-6 order-1 lg:order-2 pt-36 md:pt-20 overflow-hidden col-span-12 flex items-center justify-center ">
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
