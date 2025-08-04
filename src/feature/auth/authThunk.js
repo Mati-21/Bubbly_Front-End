@@ -12,7 +12,7 @@ export const getCurrentUser = createAsyncThunk(
       return response.data; // user object
     } catch (error) {
       return rejectWithValue(
-        error.response.data.message || "Not authenticated"
+        error.response.data.error.message || "Not authenticated"
       );
     }
   }
