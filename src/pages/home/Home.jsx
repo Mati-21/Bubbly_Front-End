@@ -1,11 +1,13 @@
+import MainContainer from "./Main_Container/mainContainer";
 import Sidebar from "./Sidebar_Section/Sidebar";
 
 function Home() {
-  const activeChat = true;
   return (
-    <div className="h-screen grid grid-cols-12 bg-green-100">
+    <div className="h-screen w-screen min-w-[280px] grid grid-cols-12 bg-green-100">
       {/* sidbar */}
       <Sidebar />
+      {/* Main Container */}
+      <MainContainer />
     </div>
   );
 }

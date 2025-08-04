@@ -23,7 +23,7 @@ function ChatList() {
   console.log(users[0]);
 
   return (
-    <div className="space-y-2 mt-4 flex-1 overflow-scroll scrollbar overflow-x-hidden ">
+    <div className="space-y-2 mt-4 flex-1 overflow-scroll scrollbar overflow-x-hidden  ">
       {users.map((user, i) => (
         <List key={i} user={user} />
       ))}
