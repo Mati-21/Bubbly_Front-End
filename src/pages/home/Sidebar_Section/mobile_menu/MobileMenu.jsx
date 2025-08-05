@@ -1,16 +1,64 @@
-function MobileMenu() {
+import { Pen, Settings, Sun, User } from "lucide-react";
+import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
+
+function MobileMenu({ mobileMenu, closeMobileMenu }) {
+  const { user } = useSelector((state) => state.auth);
+
   return (
-    <div className="absolute top-0 left-0 h-screen w-56 bg-green-200 px-4  ">
-      {/* Upper profile */}
-      <div className="px-4 py-2">
-        <div className="flex items-center justify-between">
-          <img
-            src={`https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqtNV9htkV2DORF2rdUW5rpahAtdHRRPVJcwNIlsv1aHl59tzsyN7J-BxuaXIxSmmNIX7aLu-h7G95jcpOKPVNXBJBte-dg-wjM96aLg`}
-            className="w-14 h-14 rounded-full object-cover"
-          />
-          <p>hello</p>
+    <div
+      onClick={closeMobileMenu}
+      className={`fixed inset-0 z-50 sm:hidden backdrop-blur-sm transition-opacity duration-300 ${
+        mobileMenu ? "opacity-100 visible" : "opacity-0 invisible"
+      }`}
+    >
+      <motion.div
+        initial={{ x: -300 }}
+        animate={{ x: mobileMenu ? 0 : -300 }}
+        exit={{ x: -300 }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
+        onClick={(e) => e.stopPropagation()}
+        className="absolute top-0 left-0 h-screen w-56 bg-gray-600 text-white font-raleway px-4 py-2 sm:hidden"
+      >
+        {/* Upper profile */}
+        <div>
+          {/* First row */}
+          <div className="flex items-center justify-between">
+            <img
+              src={user.picture}
+              className="size-12 rounded-full object-cover"
+              alt="Profile"
+            />
+            <Sun className="text-orange-400 cursor-pointer" />
+          </div>
+
+          {/* second row */}
+          <div className="mt-2 font-bold tracking-wider">
+            <p className="text-xs text-black/90 mt-1">User Info</p>
+            <h1>{user.name}</h1>
+            <p className="text-xs text-black/90 mt-1">Bio</p>
+            <p className="text-xs text-slate-400">{user.bio}</p>
+          </div>
+
+          <div className="border-b border-slate-500 mt-2"></div>
         </div>
-      </div>
+
+        {/* setting */}
+        <div className="mt-4 flex flex-col items-start">
+          <span className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-500/40 duration-300 transition-all px-2 py-1 rounded">
+            <User size={16} />
+            <p className="text-sm tracking-wider">View Profile</p>
+          </span>
+          <span className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-500/40 duration-300 transition-all px-2 py-1 rounded">
+            <Pen size={16} />
+            <p className="text-sm tracking-wider">Edit Profile</p>
+          </span>
+          <span className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-500/40 duration-300 transition-all px-2 py-1 rounded">
+            <Settings size={18} />
+            <p className="text-sm tracking-wider">Setting</p>
+          </span>
+        </div>
+      </motion.div>
     </div>
   );
 }

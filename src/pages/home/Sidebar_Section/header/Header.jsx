@@ -1,8 +1,8 @@
-import { EllipsisVertical, Menu, Search } from "lucide-react";
+import { EllipsisVertical, Menu, Pen, Search } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-function Header() {
+function Header({ openMobileMenu }) {
   const [openSearch, setOpenSearch] = useState(false);
   const { user } = useSelector((state) => state.auth);
 
@@ -25,14 +25,15 @@ function Header() {
           </div>
         </div>
         {/* header Right */}
-        <div>
+        <div className="flex items-center gap-2">
+          <Pen size={18} className="cursor-pointer" />
           <EllipsisVertical className="cursor-pointer" />
         </div>
       </div>
 
       {/* for mobile  */}
-      <div className="flex items-center justify-between p-2 text-white sm:hidden">
-        <div>
+      <div className="flex items-center justify-between p-2 text-white sm:hidden border-b border-gray-800">
+        <div onClick={() => openMobileMenu()} className="cursor-pointer">
           <Menu />
         </div>
         <div className="flex gap-2  items-center">
