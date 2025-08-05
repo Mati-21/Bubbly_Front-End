@@ -1,15 +1,17 @@
 import { CheckCheck } from "lucide-react";
+import { formatMessageTime } from "../../../../utils/formatDate";
 
 function Message({ message, me }) {
+  console.log(me);
   return (
     <div
       className={`w-full  px-4 py-2 flex ${
-        me === "Bob" ? "justify-end" : "justify-start"
+        me ? "justify-end" : "justify-start"
       }`}
     >
       <div
         className={`max-w-sm px-4 py-1 rounded-xl ${
-          me === "Bob"
+          me
             ? "bg-blue-600 text-white rounded-br-none "
             : "bg-slate-400 rounded-bl-none"
         }`}
@@ -24,7 +26,7 @@ function Message({ message, me }) {
 
         {/* Time and Check */}
         <p className="text-[10px] text-gray-100 text-right mt-1 flex gap-2">
-          {new Date(message.timestamp).toLocaleTimeString()}
+          {formatMessageTime(message?.createdAt)}
           {me === "Bob" && <CheckCheck size={14} className="text-blue-100 " />}
         </p>
       </div>

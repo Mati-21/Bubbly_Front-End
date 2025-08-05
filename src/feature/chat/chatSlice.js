@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getChats, open_create_chat } from "./chatThunk";
+import {
+  getChats,
+  open_create_chat,
+  send_Message,
+  getMessages,
+} from "./chatThunk";
 
 const initialState = {
   status: "",
@@ -41,6 +46,30 @@ const chatSlice = createSlice({
         state.activeChat = action.payload;
       })
       .addCase(open_create_chat.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch chats";
+      })
+      .addCase(send_Message.pending, (state) => {
+        state.status = "loading";
+        state.error = "";
+      })
+      .addCase(send_Message.fulfilled, (state, action) => {
+        state.status = "success";
+        state.messages = [...state.messages, action.payload];
+      })
+      .addCase(send_Message.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch chats";
+      })
+      .addCase(getMessages.pending, (state) => {
+        state.status = "loading";
+        state.error = "";
+      })
+      .addCase(getMessages.fulfilled, (state, action) => {
+        state.status = "success";
+        state.messages = action.payload;
+      })
+      .addCase(getMessages.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch chats";
       });

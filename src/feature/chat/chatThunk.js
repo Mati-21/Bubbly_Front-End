@@ -24,3 +24,31 @@ export const open_create_chat = createAsyncThunk(
     }
   }
 );
+
+export const getMessages = createAsyncThunk(
+  "chat/getMessages",
+  async (chat_id, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${BACKEND_URL}/message/${chat_id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data?.error?.message);
+    }
+  }
+);
+export const send_Message = createAsyncThunk(
+  "chat/sendMessage",
+  async (value, { rejectWithValue }) => {
+    try {
+      const { files, message, chat_id } = value;
+      const { data } = await axios.post(`${BACKEND_URL}/message`, {
+        files,
+        message,
+        chat_id,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data?.error?.message);
+    }
+  }
+);
