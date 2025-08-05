@@ -22,6 +22,14 @@ const chatSlice = createSlice({
     clearActiveChat: (state) => {
       state.activeChat = {};
     },
+    clearChatState: (state) => {
+      state.status = "";
+      state.error = "";
+      state.chats = [];
+      state.messages = [];
+      state.activeChat = {};
+      state.files = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -75,5 +83,5 @@ const chatSlice = createSlice({
       });
   },
 });
-export const { clearActiveChat } = chatSlice.actions;
+export const { clearActiveChat, clearChatState } = chatSlice.actions;
 export default chatSlice.reducer;

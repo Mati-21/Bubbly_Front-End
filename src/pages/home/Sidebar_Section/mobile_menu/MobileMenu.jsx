@@ -1,9 +1,17 @@
-import { Pen, Settings, Sun, User } from "lucide-react";
-import { useSelector } from "react-redux";
+import { LogOut, Pen, Settings, Sun, User } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { logout } from "../../../../feature/auth/authThunk";
+import { clearChatState } from "../../../../feature/chat/chatSlice";
 
 function MobileMenu({ mobileMenu, closeMobileMenu }) {
   const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const handleLogout = async (e) => {
+    e.stopPropagation();
+    dispatch(clearChatState());
+    dispatch(logout());
+  };
 
   return (
     <div
@@ -45,17 +53,24 @@ function MobileMenu({ mobileMenu, closeMobileMenu }) {
 
         {/* setting */}
         <div className="mt-4 flex flex-col items-start">
-          <span className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-500/40 duration-300 transition-all px-2 py-1 rounded">
+          <span className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-500/40 duration-300 transition-all  py-1 rounded">
             <User size={16} />
             <p className="text-sm tracking-wider">View Profile</p>
           </span>
-          <span className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-500/40 duration-300 transition-all px-2 py-1 rounded">
+          <span className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-500/40 duration-300 transition-all  py-1 rounded">
             <Pen size={16} />
             <p className="text-sm tracking-wider">Edit Profile</p>
           </span>
-          <span className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-500/40 duration-300 transition-all px-2 py-1 rounded">
+          <span className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-500/40 duration-300 transition-all  py-1 rounded">
             <Settings size={18} />
             <p className="text-sm tracking-wider">Setting</p>
+          </span>
+          <span
+            onClick={handleLogout}
+            className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-500/40 duration-300 transition-all  py-1 rounded"
+          >
+            <LogOut size={18} />
+            <p className="text-sm tracking-wider">Logout</p>
           </span>
         </div>
       </motion.div>

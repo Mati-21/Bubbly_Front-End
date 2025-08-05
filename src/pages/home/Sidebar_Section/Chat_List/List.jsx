@@ -1,10 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { open_create_chat } from "../../../../feature/chat/chatThunk";
-import { getReceiverId } from "../../../../utils/getId/getreceiverId";
+import {
+  findOtherUser,
+  getReceiverId,
+} from "../../../../utils/getId/getreceiverId";
 
 function List({ chat }) {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const otherUser = findOtherUser(chat.users, user._id);
 
   const handleChat = async (users) => {
     const receiver_id = getReceiverId(users, user._id);
@@ -22,13 +27,13 @@ function List({ chat }) {
       <div className="text-white flex items-center gap-2">
         <div className="overflow-hidden size-12 rounded-full">
           <img
-            src={chat.picture}
+            src={otherUser.picture}
             className="h-full w-full object-cover"
             alt=""
           />
         </div>
         <div className=" flex flex-col ">
-          <span className="font-bold text-md sm:text-md">{chat.name}</span>
+          <span className="font-bold text-md sm:text-md">{otherUser.name}</span>
 
           <span className="text-xs sm:text-md hidden lg:block">
             {chat.latestMessage
