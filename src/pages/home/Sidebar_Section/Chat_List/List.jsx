@@ -1,31 +1,48 @@
-function List({ user }) {
-  console.log();
+import { useDispatch, useSelector } from "react-redux";
+import { open_create_chat } from "../../../../feature/chat/chatThunk";
+import { getReceiverId } from "../../../../utils/getId/getreceiverId";
+
+function List({ chat }) {
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const handleChat = async (users) => {
+    const receiver_id = getReceiverId(users, user._id);
+    console.log("receiver_id", receiver_id);
+
+    const activeChat = await dispatch(open_create_chat(receiver_id));
+  };
+
   return (
-    <div className="flex items-center justify-between p-2">
+    <div
+      onClick={() => handleChat(chat.users)}
+      className="flex items-center justify-between p-2 hover:bg-slate-200/50 duration-300 transition-all hover:rounded cursor-pointer border-b border-gray-200/40"
+    >
       {/* left side  */}
       <div className="text-white flex items-center gap-2">
-        <div className="overflow-hidden">
+        <div className="overflow-hidden size-12 rounded-full">
           <img
-            src={user.picture.large}
-            className="h-14 w-14 rounded-full"
+            src={chat.picture}
+            className="h-full w-full object-cover"
             alt=""
           />
         </div>
-        <div>
-          <h1 className="flex gap-1">
-            <span className="text-xs sm:text-md">{user.name.first}</span>
-            <span className="text-xs sm:text-md">{user.name.last}</span>
-          </h1>
+        <div className=" flex flex-col ">
+          <span className="font-bold text-md sm:text-md">{chat.name}</span>
 
           <span className="text-xs sm:text-md hidden lg:block">
-            {user.email.length > 10
-              ? user.email.slice(0, 10) + "..."
-              : user.email}
+            {chat.latestMessage
+              ? chat?.latestMessage?.message.length > 10
+                ? chat?.latestMessage?.message.slice(0, 10) + "..."
+                : chat?.latestMessage?.message
+              : "Start messaging"}
           </span>
           <span className="text-xs sm:text-md lg:hidden">
-            {user.email.length > 20
-              ? user.email.slice(0, 20) + "..."
-              : user.email}
+            {chat.latestMessage
+              ? chat?.latestMessage?.length > 20
+                ? chat?.latestMessage?.message?.slice(0, 20) + "..."
+                : chat?.latestMessage?.message
+              : "Start Messaging"}
           </span>
         </div>
       </div>

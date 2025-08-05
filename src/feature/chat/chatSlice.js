@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getChats } from "./chatThunk";
+import { getChats, open_create_chat } from "./chatThunk";
 
 const initialState = {
   status: "",
@@ -13,7 +13,11 @@ const initialState = {
 const chatSlice = createSlice({
   name: "chat",
   initialState,
-  reducers: {}, // ✅ should be plural: reducers
+  reducers: {
+    clearActiveChat: (state) => {
+      state.activeChat = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getChats.pending, (state) => {
@@ -27,8 +31,20 @@ const chatSlice = createSlice({
       .addCase(getChats.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch chats";
+      })
+      .addCase(open_create_chat.pending, (state) => {
+        state.status = "loading";
+        state.error = "";
+      })
+      .addCase(open_create_chat.fulfilled, (state, action) => {
+        state.status = "success";
+        state.activeChat = action.payload;
+      })
+      .addCase(open_create_chat.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch chats";
       });
   },
 });
-
+export const { clearActiveChat } = chatSlice.actions;
 export default chatSlice.reducer;

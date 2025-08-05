@@ -1,21 +1,35 @@
 import { ArrowLeftIcon, EllipsisVertical, Search } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { clearActiveChat } from "../../../../feature/chat/chatSlice";
 
 function ChatHeader() {
-  const { user } = useSelector((state) => state.auth);
-  console.log(user);
+  const { activeChat } = useSelector((state) => state.chat);
+  const dispatch = useDispatch();
+
+  const handleActiveChat = () => {
+    dispatch(clearActiveChat());
+  };
+
+  console.log(activeChat);
+
   return (
     <div className="px-4 py-1 flex items-center justify-between bg-slate-500">
       {/* header left */}
       <div className="flex items-center gap-2 text-white/90">
-        <div className="sm:hidden">
+        <div onClick={handleActiveChat} className="sm:hidden">
           <ArrowLeftIcon />
         </div>
         <div className="size-10 rounded-full overflow-hidden ">
-          <img src={user.picture} alt="" className="h-10 w-10 object-cover" />
+          <img
+            src={activeChat.picture}
+            alt=""
+            className="h-10 w-10 object-cover"
+          />
         </div>
         <div className="flex justify-center flex-col ">
-          <h1 className="font-bold text-sm tracking-wider">{user.name}</h1>
+          <h1 className="font-bold text-sm tracking-wider">
+            {activeChat.name}
+          </h1>
           <span className="text-xs tracking-wider">Online</span>
         </div>
       </div>
@@ -25,7 +39,7 @@ function ChatHeader() {
       </div>
 
       <div className="sm:hidden ">
-        <Search className="cursor-pointer size-6" />
+        <Search className="cursor-pointer size-6  text-white" />
       </div>
     </div>
   );

@@ -13,3 +13,14 @@ export const getChats = createAsyncThunk(
     }
   }
 );
+export const open_create_chat = createAsyncThunk(
+  "chat/open_create",
+  async (receiver_id, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`${BACKEND_URL}/chat`, { receiver_id });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error.message);
+    }
+  }
+);
