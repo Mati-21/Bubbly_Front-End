@@ -1,6 +1,5 @@
 import EmojiPicker from "emoji-picker-react";
 import { Smile } from "lucide-react";
-import { useState } from "react";
 
 function EmojiComponent({ textRef, setMessage, showEmoji, setShowEmoji }) {
   const handleEmoji = (emojiData) => {
