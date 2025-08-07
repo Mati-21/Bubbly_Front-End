@@ -13,7 +13,6 @@ function List({ chat }) {
 
   const handleChat = async (users) => {
     const receiver_id = getReceiverId(users, user._id);
-    console.log("receiver_id", receiver_id);
 
     const activeChat = await dispatch(open_create_chat(receiver_id));
   };

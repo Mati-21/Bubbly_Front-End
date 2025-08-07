@@ -64,6 +64,7 @@ const chatSlice = createSlice({
       .addCase(send_Message.fulfilled, (state, action) => {
         state.status = "success";
         state.messages = [...state.messages, action.payload];
+        const chat = action.payload.chat;
       })
       .addCase(send_Message.rejected, (state, action) => {
         state.status = "failed";

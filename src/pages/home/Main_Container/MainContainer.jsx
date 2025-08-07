@@ -3,11 +3,12 @@ import ChatActions from "./chatActions/ChatActions";
 import ChatContainer from "./chatContainer/ChatContainer";
 import ChatHeader from "./chatHeader/ChatHeader";
 import { getMessages } from "../../../feature/chat/chatThunk";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function MainContainer() {
   const { activeChat } = useSelector((state) => state.chat);
   const dispatch = useDispatch();
+  const [showEmoji, setShowEmoji] = useState(false);
 
   useEffect(() => {
     if (activeChat._id) {
@@ -22,8 +23,8 @@ function MainContainer() {
       }  sm:col-span-7 md:col-span-8 lg:col-span-9  sm:flex flex-col `}
     >
       <ChatHeader />
-      <ChatContainer />
-      <ChatActions />
+      <ChatContainer setShowEmoji={setShowEmoji} />
+      <ChatActions showEmoji={showEmoji} setShowEmoji={setShowEmoji} />
     </div>
   );
 }
