@@ -8,7 +8,8 @@ import EmojiComponent from "./EmojiPicker/EmojiComponent";
 
 function ChatActions({ showEmoji, setShowEmoji }) {
   const [message, setMessage] = useState("");
-  const { activeChat } = useSelector((state) => state.chat);
+  const { activeChat, files } = useSelector((state) => state.chat);
+  console.log(files);
   const dispatch = useDispatch();
   const textRef = useRef();
   // const inpRef = useRef;

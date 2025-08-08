@@ -1,5 +1,5 @@
 import { Paperclip } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addFiles } from "../../../../../feature/chat/chatSlice";
 import { getFileType } from "../../../../../utils/getFileType";
@@ -21,26 +21,38 @@ function Attachment() {
   const fileRef = useRef();
   const dispatch = useDispatch();
 
-  const handlefile = (e) => {
-    const files = Array.from(e.target.files);
+  // 🧠 Store raw files locally in the component
+  const [localFiles, setLocalFiles] = useState([]);
 
-    const filteredFiles = files.filter((file) =>
+  const handleFile = (e) => {
+    const selectedFiles = Array.from(e.target.files);
+
+    // Filter only allowed types
+    const filteredFiles = selectedFiles.filter((file) =>
       allowedTypes.includes(file.type)
     );
 
-    filteredFiles.map((file) => {
+    // Update local state with raw files
+    setLocalFiles((prev) => [...prev, ...filteredFiles]);
+
+    // Loop through and dispatch preview data
+    filteredFiles.forEach((file) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = (e) => {
+      reader.onload = (event) => {
         dispatch(
           addFiles({
-            file,
-            imgData: e.target.result,
+            imgData: event.target.result, // base64 preview (serializable)
             type: getFileType(file.type),
+            name: file.name,
+            size: file.size,
           })
         );
       };
     });
+
+    // Clear the file input so same file can be selected again
+    e.target.value = "";
   };
 
   return (
@@ -55,7 +67,8 @@ function Attachment() {
         multiple
         className="hidden"
         ref={fileRef}
-        onChange={handlefile}
+        onChange={handleFile}
+        accept={allowedTypes.join(",")}
       />
     </div>
   );

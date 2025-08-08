@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import Message from "./Message";
+
 function ChatContainer({ setShowEmoji }) {
   const { messages } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.auth);
@@ -13,7 +14,7 @@ function ChatContainer({ setShowEmoji }) {
   return (
     <div
       onClick={() => setShowEmoji(false)}
-      className="flex-1 space-y-2 my-2 overflow-y-scroll scrollbar "
+      className="flex-1 space-y-2 my-2 overflow-y-scroll scrollbar relative "
     >
       {messages?.map((message, i) => {
         const me = message.sender._id === user._id;

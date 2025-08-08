@@ -6,6 +6,7 @@ import { getChats } from "../../feature/chat/chatThunk";
 import MobileMenu from "./Sidebar_Section/mobile_menu/MobileMenu";
 import { AnimatePresence } from "framer-motion";
 import StartingPage from "./Main_Container/StartPage/StartingPage";
+import Preview from "./Preview/Preview";
 
 function Home() {
   const dispatch = useDispatch();
