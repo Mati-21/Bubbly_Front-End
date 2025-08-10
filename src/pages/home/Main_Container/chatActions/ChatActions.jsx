@@ -5,9 +5,12 @@ import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { send_Message } from "../../../../feature/chat/chatThunk";
 import EmojiComponent from "./EmojiPicker/EmojiComponent";
+import { uploadFiles } from "../../../../utils/UploadFiles";
+import { clearFiles } from "../../../../feature/chat/chatSlice";
 
 function ChatActions({ showEmoji, setShowEmoji }) {
   const [message, setMessage] = useState("");
+  const [localFiles, setLocalFiles] = useState([]);
   const { activeChat, files } = useSelector((state) => state.chat);
   console.log(files);
   const dispatch = useDispatch();
@@ -16,10 +19,14 @@ function ChatActions({ showEmoji, setShowEmoji }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const uploaded_images = await uploadFiles(localFiles);
+
+    dispatch(clearFiles());
+
     const msg = {
       chat_id: activeChat._id,
       message,
-      files: [],
+      files: uploaded_images || [],
     };
     await dispatch(send_Message(msg));
     setMessage("");
@@ -38,7 +45,7 @@ function ChatActions({ showEmoji, setShowEmoji }) {
         textRef={textRef}
       />
       <Input setMessage={setMessage} message={message} textRef={textRef} />
-      <Attachment />
+      <Attachment setLocalFiles={setLocalFiles} />
       <button type="submit">
         <Send color="yellow" />
       </button>

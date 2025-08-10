@@ -1,5 +1,5 @@
 import { Paperclip } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { addFiles } from "../../../../../feature/chat/chatSlice";
 import { getFileType } from "../../../../../utils/getFileType";
@@ -17,12 +17,11 @@ const allowedTypes = [
   "application/vnd.openxmlformats-officedocument.presentationml.presentation",
 ];
 
-function Attachment() {
+function Attachment({ setLocalFiles }) {
   const fileRef = useRef();
   const dispatch = useDispatch();
 
   // 🧠 Store raw files locally in the component
-  const [localFiles, setLocalFiles] = useState([]);
 
   const handleFile = (e) => {
     const selectedFiles = Array.from(e.target.files);
