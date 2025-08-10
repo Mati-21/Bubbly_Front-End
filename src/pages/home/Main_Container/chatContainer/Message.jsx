@@ -2,6 +2,7 @@ import { CheckCheck } from "lucide-react";
 import { formatMessageTime } from "../../../../utils/formatDate";
 
 function Message({ message, me }) {
+  console.log(message);
   return (
     <div
       className={`w-full  px-4 py-2 flex ${
