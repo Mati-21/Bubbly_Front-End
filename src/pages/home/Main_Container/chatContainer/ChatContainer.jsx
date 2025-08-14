@@ -5,7 +5,6 @@ import Message from "./Message";
 function ChatContainer({ setShowEmoji }) {
   const { messages } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.auth);
-  console.log(messages);
 
   const endRef = useRef();
   useEffect(() => {

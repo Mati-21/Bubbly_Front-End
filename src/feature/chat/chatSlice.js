@@ -71,6 +71,20 @@ const chatSlice = createSlice({
       .addCase(send_Message.fulfilled, (state, action) => {
         state.status = "success";
         state.messages = [...state.messages, action.payload];
+
+        const latestMessage = action.payload;
+
+        let onechat = {
+          ...action.payload.chat,
+          latestMessage,
+        };
+        console.log(onechat);
+
+        let newChats = [...state.chats].filter((chat) => {
+          return chat._id !== onechat._id;
+        });
+        newChats.unshift(onechat);
+        state.chats = newChats;
       })
       .addCase(send_Message.rejected, (state, action) => {
         state.status = "failed";

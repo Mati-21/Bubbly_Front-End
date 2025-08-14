@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MainContainer from "./Main_Container/mainContainer";
 import Sidebar from "./Sidebar_Section/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ function Home() {
   const dispatch = useDispatch();
   const { activeChat } = useSelector((state) => state.chat);
   const [mobileMenu, setMobileMenu] = useState(false);
+  const textRef = useRef();
 
   const openMobileMenu = () => {
     setMobileMenu(true);
@@ -32,9 +33,9 @@ function Home() {
   return (
     <div className="h-screen min-h-screen w-screen min-w-[280px] grid grid-cols-12 bg-green-100 relative">
       {/* sidbar */}
-      <Sidebar openMobileMenu={openMobileMenu} />
+      <Sidebar openMobileMenu={openMobileMenu} textRef={textRef} />
       {/* Main Container if there is active chat */}
-      {activeChat._id ? <MainContainer /> : <StartingPage />}
+      {activeChat._id ? <MainContainer textRef={textRef} /> : <StartingPage />}
       {/* mobile menu */}
       <AnimatePresence>
         {mobileMenu && (

@@ -5,7 +5,7 @@ import {
   getReceiverId,
 } from "../../../../utils/getId/getreceiverId";
 
-function List({ chat }) {
+function List({ chat, textRef }) {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -13,6 +13,7 @@ function List({ chat }) {
 
   const handleChat = async (users) => {
     const receiver_id = getReceiverId(users, user._id);
+    textRef.current?.focus();
 
     const activeChat = await dispatch(open_create_chat(receiver_id));
   };

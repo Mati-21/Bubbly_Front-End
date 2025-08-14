@@ -6,7 +6,7 @@ import { getMessages } from "../../../feature/chat/chatThunk";
 import { useEffect, useState } from "react";
 import Preview from "../Preview/Preview";
 
-function MainContainer() {
+function MainContainer({ textRef }) {
   const { activeChat, files } = useSelector((state) => state.chat);
   const dispatch = useDispatch();
   const [showEmoji, setShowEmoji] = useState(false);
@@ -30,7 +30,11 @@ function MainContainer() {
       ) : (
         <ChatContainer setShowEmoji={setShowEmoji} />
       )}
-      <ChatActions showEmoji={showEmoji} setShowEmoji={setShowEmoji} />
+      <ChatActions
+        showEmoji={showEmoji}
+        setShowEmoji={setShowEmoji}
+        textRef={textRef}
+      />
     </div>
   );
 }

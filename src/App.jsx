@@ -3,12 +3,24 @@ import Home from "./pages/home/Home";
 import Signup from "./pages/signup/Signup";
 import Login from "./pages/login/Login";
 import Landing from "./pages/landing/Landing";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "./feature/auth/authThunk";
-// import ScrollToTop from "./utils/ScrollToTop";
+import { io } from "socket.io-client";
 
 function App() {
+  const SERVER_ENDPOINT = import.meta.env.VITE_SERVER_ENDPOINT;
+
+  const socketRef = useRef(null);
+
+  useEffect(() => {
+    socketRef.current = io(SERVER_ENDPOINT);
+
+    return () => {
+      socketRef.current.disconnect();
+    };
+  }, [SERVER_ENDPOINT]);
+
   const dispatch = useDispatch();
   const { isAuthenticated, hasLoaded } = useSelector((state) => state.auth);
 

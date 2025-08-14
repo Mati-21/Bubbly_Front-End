@@ -1,20 +1,20 @@
 import { Send, Smile } from "lucide-react";
 import Input from "./Input/Input";
 import Attachment from "./Attachment/Attachment";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { send_Message } from "../../../../feature/chat/chatThunk";
 import EmojiComponent from "./EmojiPicker/EmojiComponent";
 import { uploadFiles } from "../../../../utils/UploadFiles";
 import { clearFiles } from "../../../../feature/chat/chatSlice";
 
-function ChatActions({ showEmoji, setShowEmoji }) {
+function ChatActions({ showEmoji, setShowEmoji, textRef }) {
   const [message, setMessage] = useState("");
   const [localFiles, setLocalFiles] = useState([]);
   const { activeChat, files } = useSelector((state) => state.chat);
-  console.log(files);
+
   const dispatch = useDispatch();
-  const textRef = useRef();
+
   // const inpRef = useRef;
 
   const handleSubmit = async (e) => {

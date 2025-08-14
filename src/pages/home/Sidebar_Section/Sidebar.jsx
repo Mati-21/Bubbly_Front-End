@@ -3,7 +3,7 @@ import ChatList from "./Chat_List/ChatList";
 import Header from "./header/Header";
 import DesktopSearch from "./Search/DesktopSearch/DesktopSearch";
 
-function Sidebar({ openMobileMenu }) {
+function Sidebar({ openMobileMenu, textRef }) {
   const { activeChat } = useSelector((state) => state.chat);
 
   return (
@@ -17,7 +17,7 @@ function Sidebar({ openMobileMenu }) {
       {/* Search for Desktop */}
       <DesktopSearch />
       {/* Chat List for Desktop */}
-      <ChatList />
+      <ChatList textRef={textRef} />
     </div>
   );
 }
