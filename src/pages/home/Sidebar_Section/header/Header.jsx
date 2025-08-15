@@ -1,10 +1,16 @@
-import { EllipsisVertical, Menu, Pen, Search } from "lucide-react";
+import { EllipsisVertical, LogOut, Menu, Pen, Search } from "lucide-react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../../feature/auth/authThunk";
 
 function Header({ openMobileMenu }) {
   const [openSearch, setOpenSearch] = useState(false);
   const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    await dispatch(logout());
+  };
 
   return (
     <div className="w-full ">
@@ -28,6 +34,7 @@ function Header({ openMobileMenu }) {
         <div className="flex items-center gap-2">
           <Pen size={18} className="cursor-pointer" />
           <EllipsisVertical className="cursor-pointer" />
+          <LogOut className="cursor-pointer" onClick={() => handleLogout()} />
         </div>
       </div>
 

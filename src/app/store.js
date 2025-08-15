@@ -2,13 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import auth from "../feature/auth/authSlice";
 
 import chat from "../feature/chat/chatSlice";
-import storage from "redux-persist/es/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
+import sessionStorage from "redux-persist/es/storage/session";
 
 const chatPersistConfig = {
   key: "activeChat",
-  storage,
+  storage: sessionStorage,
   whitelist: ["activeChat"],
 };
 
