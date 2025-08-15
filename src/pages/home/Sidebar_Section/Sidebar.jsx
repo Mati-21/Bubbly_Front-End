@@ -2,9 +2,12 @@ import { useSelector } from "react-redux";
 import ChatList from "./Chat_List/ChatList";
 import Header from "./header/Header";
 import DesktopSearch from "./Search/DesktopSearch/DesktopSearch";
+import { useState } from "react";
+import SearchResult from "./Search_Result/SearchResult";
 
 function Sidebar({ openMobileMenu, textRef }) {
   const { activeChat } = useSelector((state) => state.chat);
+  const [searchResult, setSearchResult] = useState([]);
 
   return (
     <div
@@ -15,9 +18,13 @@ function Sidebar({ openMobileMenu, textRef }) {
       {/* header for desktop */}
       <Header openMobileMenu={openMobileMenu} />
       {/* Search for Desktop */}
-      <DesktopSearch />
+      <DesktopSearch setSearchResult={setSearchResult} />
       {/* Chat List for Desktop */}
-      <ChatList textRef={textRef} />
+      {searchResult.length > 0 ? (
+        <SearchResult searchResult={searchResult} />
+      ) : (
+        <ChatList textRef={textRef} />
+      )}
     </div>
   );
 }
