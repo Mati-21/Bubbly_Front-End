@@ -1,5 +1,4 @@
 function Input({ message, setMessage, textRef }) {
-  console.log(textRef.current);
   return (
     <div className="flex-1">
       <input

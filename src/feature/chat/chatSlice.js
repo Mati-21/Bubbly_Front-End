@@ -37,7 +37,33 @@ const chatSlice = createSlice({
     clearFiles: (state) => {
       state.files = [];
     },
+
+    updateMessage: (state, action) => {
+      const incoming = action.payload;
+
+      const exists = state.messages.some((m) => m._id === incoming._id);
+      if (!exists) {
+        state.messages = [...state.messages, incoming];
+      }
+
+      const latestMessage = action.payload;
+
+      let oneconvo = {
+        ...action.payload.chat,
+        latestMessage,
+      };
+
+      let newChats = [...state.chats].filter((convo) => {
+        return convo._id !== oneconvo._id;
+      });
+
+      console.log(oneconvo);
+
+      newChats.unshift(oneconvo);
+      state.chats = newChats;
+    },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(getChats.pending, (state) => {
@@ -104,7 +130,12 @@ const chatSlice = createSlice({
       });
   },
 });
-export const { clearActiveChat, addFiles, clearChatState, clearFiles } =
-  chatSlice.actions;
+export const {
+  clearActiveChat,
+  addFiles,
+  clearChatState,
+  updateMessage,
+  clearFiles,
+} = chatSlice.actions;
 
 export default chatSlice.reducer;

@@ -5,14 +5,11 @@ import ChatHeader from "./chatHeader/ChatHeader";
 import { getMessages } from "../../../feature/chat/chatThunk";
 import { useEffect, useState } from "react";
 import Preview from "../Preview/Preview";
-import { useSocket } from "../../../context/useSocket";
 
 function MainContainer({ textRef }) {
   const { activeChat, files } = useSelector((state) => state.chat);
   const dispatch = useDispatch();
   const [showEmoji, setShowEmoji] = useState(false);
-  const { socket } = useSocket();
-  console.log(socket);
 
   useEffect(() => {
     if (activeChat._id) {

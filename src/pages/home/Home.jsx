@@ -7,12 +7,16 @@ import MobileMenu from "./Sidebar_Section/mobile_menu/MobileMenu";
 import { AnimatePresence } from "framer-motion";
 import StartingPage from "./Main_Container/StartPage/StartingPage";
 import Preview from "./Preview/Preview";
+import { useSocket } from "../../context/useSocket";
+import { updateMessage } from "../../feature/chat/chatSlice";
 
 function Home() {
   const dispatch = useDispatch();
   const { activeChat } = useSelector((state) => state.chat);
+  const { user } = useSelector((state) => state.auth);
   const [mobileMenu, setMobileMenu] = useState(false);
   const textRef = useRef();
+  const { socket } = useSocket();
 
   const openMobileMenu = () => {
     setMobileMenu(true);
@@ -20,6 +24,16 @@ function Home() {
   const closeMobileMenu = () => {
     setMobileMenu(false);
   };
+
+  // Join User
+  useEffect(() => {
+    socket.emit("user joins", user._id);
+
+    socket.on("receiveMessage", (Message) => {
+      console.log(Message);
+      dispatch(updateMessage(Message));
+    });
+  }, [user, dispatch, socket]);
 
   // fetch chats for the user
   useEffect(() => {
