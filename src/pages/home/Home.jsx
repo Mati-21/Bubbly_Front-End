@@ -9,12 +9,20 @@ import StartingPage from "./Main_Container/StartPage/StartingPage";
 import Preview from "./Preview/Preview";
 import { useSocket } from "../../context/useSocket";
 import { updateMessage } from "../../feature/chat/chatSlice";
+import UserProfile from "../../components/general_ui_components/UserProfile";
+import FullScrenProfile from "../../components/general_ui_components/FullScrenProfile";
 
 function Home() {
   const dispatch = useDispatch();
   const { activeChat } = useSelector((state) => state.chat);
+
+  // local states
   const { user } = useSelector((state) => state.auth);
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
+  const [openFullProfile, setOpenFullProfile] = useState(false);
+
+  // sockets
   const textRef = useRef();
   const { socket } = useSocket();
 
@@ -46,8 +54,24 @@ function Home() {
 
   return (
     <div className="h-screen min-h-screen w-screen min-w-[280px] grid grid-cols-12 bg-green-100 relative">
+      {/* full screen profile */}
+      {openFullProfile ? (
+        <FullScrenProfile setOpenFullProfile={setOpenFullProfile} />
+      ) : null}
+
+      {/* profile picture */}
+      {openProfile ? (
+        <UserProfile
+          setOpenProfile={setOpenProfile}
+          setOpenFullProfile={setOpenFullProfile}
+        />
+      ) : null}
       {/* sidbar */}
-      <Sidebar openMobileMenu={openMobileMenu} textRef={textRef} />
+      <Sidebar
+        openMobileMenu={openMobileMenu}
+        textRef={textRef}
+        setOpenProfile={setOpenProfile}
+      />
       {/* Main Container if there is active chat */}
       {activeChat._id ? <MainContainer textRef={textRef} /> : <StartingPage />}
       {/* mobile menu */}

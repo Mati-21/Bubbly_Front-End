@@ -5,7 +5,7 @@ import DesktopSearch from "./Search/DesktopSearch/DesktopSearch";
 import { useState } from "react";
 import SearchResult from "./Search_Result/SearchResult";
 
-function Sidebar({ openMobileMenu, textRef }) {
+function Sidebar({ openMobileMenu, textRef, setOpenProfile }) {
   const { activeChat } = useSelector((state) => state.chat);
   const [searchResult, setSearchResult] = useState([]);
 
@@ -16,7 +16,7 @@ function Sidebar({ openMobileMenu, textRef }) {
       } sm:col-span-5 sm:flex flex-col flex-1  md:col-span-4 lg:col-span-3 col-span-12 p-2 bg-gray-700 h-screen   `}
     >
       {/* header for desktop */}
-      <Header openMobileMenu={openMobileMenu} />
+      <Header openMobileMenu={openMobileMenu} setOpenProfile={setOpenProfile} />
       {/* Search for Desktop */}
       <DesktopSearch setSearchResult={setSearchResult} />
       {/* Chat List for Desktop */}

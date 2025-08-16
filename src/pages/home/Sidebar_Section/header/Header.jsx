@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../../feature/auth/authThunk";
 
-function Header({ openMobileMenu }) {
+function Header({ openMobileMenu, setOpenProfile }) {
   const [openSearch, setOpenSearch] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -20,9 +20,10 @@ function Header({ openMobileMenu }) {
         <div className="flex gap-2">
           <div className="size-12 bg-green-200 rounded-full overflow-hidden ">
             <img
+              onClick={() => setOpenProfile((prev) => !prev)}
               src={user.picture}
               alt=""
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover cursor-pointer"
             />
           </div>
           <div className="flex justify-center flex-col">

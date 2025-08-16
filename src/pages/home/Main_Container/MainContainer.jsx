@@ -5,6 +5,7 @@ import ChatHeader from "./chatHeader/ChatHeader";
 import { getMessages } from "../../../feature/chat/chatThunk";
 import { useEffect, useState } from "react";
 import Preview from "../Preview/Preview";
+import UserProfile from "../../../components/general_ui_components/UserProfile";
 
 function MainContainer({ textRef }) {
   const { activeChat, files } = useSelector((state) => state.chat);

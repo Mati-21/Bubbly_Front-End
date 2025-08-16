@@ -13,3 +13,15 @@
 .scrollbar::-webkit-scrollbar-thumb {
   background-color: greenyellow;
 }
+
+.sideScroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.sideScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sideScroll::-webkit-scrollbar-thumb {
+  background-color: greenyellow;
+}
