@@ -10,6 +10,7 @@ function List({ chat, textRef }) {
   const dispatch = useDispatch();
 
   const otherUser = findOtherUser(chat.users, user._id);
+  console.log(otherUser);
 
   const handleChat = async (users) => {
     const receiver_id = getReceiverId(users, user._id);
@@ -27,7 +28,7 @@ function List({ chat, textRef }) {
       <div className="text-white flex items-center gap-2">
         <div className="overflow-hidden size-12 rounded-full">
           <img
-            src={otherUser.picture}
+            src={otherUser.picture[0]}
             className="h-full w-full object-cover"
             alt=""
           />

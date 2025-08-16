@@ -21,7 +21,7 @@ function Header({ openMobileMenu, setOpenProfile }) {
           <div className="size-12 bg-green-200 rounded-full overflow-hidden ">
             <img
               onClick={() => setOpenProfile((prev) => !prev)}
-              src={user.picture}
+              src={user.picture[0]}
               alt=""
               className="h-full w-full object-cover cursor-pointer"
             />

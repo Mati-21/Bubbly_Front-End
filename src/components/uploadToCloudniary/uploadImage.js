@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const uploadProfile = async (file) => {
   const cloudName = import.meta.env.VITE_CLOUD_NAME;
+
   const uploadPreset = import.meta.env.VITE_CLOUD_SECRET;
 
   console.log(cloudName);

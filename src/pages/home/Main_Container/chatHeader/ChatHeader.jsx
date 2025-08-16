@@ -19,7 +19,7 @@ function ChatHeader() {
         </div>
         <div className="size-10 rounded-full overflow-hidden ">
           <img
-            src={activeChat.picture}
+            src={activeChat.picture[0]}
             alt=""
             className="h-10 w-10 object-cover"
           />

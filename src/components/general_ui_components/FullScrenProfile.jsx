@@ -1,6 +1,10 @@
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function FullScrenProfile({ setOpenFullProfile }) {
+  const { user } = useSelector((state) => state.auth);
+  const [activeIndex, setActiveIndex] = useState(0);
   return (
     <div className="absolute inset-0 grid grid-cols-12 grid-rows-[1fr_100px] bg-slate-800 z-30 ">
       <X
@@ -20,9 +24,9 @@ function FullScrenProfile({ setOpenFullProfile }) {
       {/* First row, from col 2 to col 12 */}
       <div className="col-start-2 col-span-10 md:h-[390px] lg:h-[590px] lg:overflow-hidden bg-green-300 grid relative">
         <img
-          src="https://imgv3.fotor.com/images/slider-image/A-clear-image-of-a-woman-wearing-red-sharpened-by-Fotors-image-sharpener.jpg"
+          src={user.picture[activeIndex]}
           alt="profile"
-          className="w-full h-full  object-cover"
+          className="w-full h-[600px] object-bottom"
         />
       </div>
       {/* Second row, from col 2 to col 12 */}
@@ -30,36 +34,14 @@ function FullScrenProfile({ setOpenFullProfile }) {
         <div className="   flex justify-between  items-center p-2">
           <span></span>
           <div className="w-96 gap-2 sideScroll flex overflow-x-scroll">
-            <img
-              src="https://imgv3.fotor.com/images/slider-image/A-clear-image-of-a-woman-wearing-red-sharpened-by-Fotors-image-sharpener.jpg"
-              alt=""
-              className="h-20 w-20 object-cover rounded-lg cursor-pointer "
-            />
-            <img
-              src="https://imgv3.fotor.com/images/slider-image/A-clear-image-of-a-woman-wearing-red-sharpened-by-Fotors-image-sharpener.jpg"
-              alt=""
-              className="h-20 w-20 object-cover rounded-lg cursor-pointer "
-            />
-            <img
-              src="https://imgv3.fotor.com/images/slider-image/A-clear-image-of-a-woman-wearing-red-sharpened-by-Fotors-image-sharpener.jpg"
-              alt=""
-              className="h-20 w-20 object-cover rounded-lg cursor-pointer "
-            />
-            <img
-              src="https://imgv3.fotor.com/images/slider-image/A-clear-image-of-a-woman-wearing-red-sharpened-by-Fotors-image-sharpener.jpg"
-              alt=""
-              className="h-20 w-20 object-cover rounded-lg cursor-pointer "
-            />
-            <img
-              src="https://imgv3.fotor.com/images/slider-image/A-clear-image-of-a-woman-wearing-red-sharpened-by-Fotors-image-sharpener.jpg"
-              alt=""
-              className="h-20 w-20 object-cover rounded-lg cursor-pointer "
-            />
-            <img
-              src="https://imgv3.fotor.com/images/slider-image/A-clear-image-of-a-woman-wearing-red-sharpened-by-Fotors-image-sharpener.jpg"
-              alt=""
-              className="h-20 w-20 object-cover rounded-lg cursor-pointer "
-            />
+            {user.picture.map((image, i) => (
+              <img
+                src={image}
+                onClick={() => setActiveIndex(i)}
+                alt=""
+                className="h-20 w-20 object-cover rounded-lg cursor-pointer "
+              />
+            ))}
           </div>
           <span></span>
         </div>
