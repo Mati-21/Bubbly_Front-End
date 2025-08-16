@@ -1,19 +1,53 @@
+import { useRef, useState } from "react";
 import { Camera } from "lucide-react";
+import { uploadProfile } from "../uploadToCloudniary/uploadImage";
 
 function ImageUploader({ setOpenFullProfile }) {
+  const imgRef = useRef();
+  const [preview, setPreview] = useState(
+    "https://imgv3.fotor.com/images/slider-image/A-clear-image-of-a-woman-wearing-red-sharpened-by-Fotors-image-sharpener.jpg"
+  );
+
+  const imageHandler = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Create preview URL
+
+    const imageURL = URL.createObjectURL(file);
+    const { secure_url } = await uploadProfile(file);
+    console.log(secure_url);
+    setPreview(imageURL);
+
+    console.log("Selected File:", file);
+  };
+
   return (
     <div className="mt-8">
-      <div className="size-40 rounded-full relative overflow-hidden ">
+      <div className="size-40 rounded-full relative overflow-hidden">
         <img
-          src="https://imgv3.fotor.com/images/slider-image/A-clear-image-of-a-woman-wearing-red-sharpened-by-Fotors-image-sharpener.jpg"
-          alt=""
+          src={preview}
+          alt="profile"
           className="h-full w-full object-cover rounded-full cursor-pointer"
           onClick={() => setOpenFullProfile((prev) => !prev)}
         />
-        <div className="absolute cursor-pointer bottom-0 w-full flex items-center justify-center h-10 z-20  bg-black/40">
+
+        {/* Overlay camera button */}
+        <div
+          onClick={() => imgRef.current.click()}
+          className="absolute bottom-0 w-full h-10 flex items-center justify-center cursor-pointer bg-black/40 z-20"
+        >
           <Camera color="white" />
         </div>
-        <input type="file" className=" hidden" />
+
+        {/* Hidden input */}
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          ref={imgRef}
+          onChange={imageHandler}
+        />
       </div>
     </div>
   );
