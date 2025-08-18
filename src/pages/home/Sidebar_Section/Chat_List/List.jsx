@@ -4,6 +4,7 @@ import {
   findOtherUser,
   getReceiverId,
 } from "../../../../utils/getId/getreceiverId";
+import { formatMessageTime } from "../../../../utils/formatDate";
 
 function List({ chat, textRef }) {
   const { user } = useSelector((state) => state.auth);
@@ -16,6 +17,7 @@ function List({ chat, textRef }) {
     textRef.current?.focus();
 
     const activeChat = await dispatch(open_create_chat(receiver_id));
+    console.log(chat);
   };
 
   return (
@@ -35,21 +37,20 @@ function List({ chat, textRef }) {
         <div className=" flex flex-col ">
           <span className="font-bold text-md sm:text-md">{otherUser.name}</span>
 
-          <span className="text-xs sm:text-md hidden lg:block">
-            {chat.latestMessage
-              ? chat?.latestMessage?.message.length > 10
-                ? chat?.latestMessage?.message.slice(0, 10) + "..."
-                : chat?.latestMessage?.message
-              : "Start messaging"}
-          </span>
           <span className="text-xs sm:text-md lg:hidden">
-            {chat.latestMessage
-              ? chat?.latestMessage?.length > 20
-                ? chat?.latestMessage?.message?.slice(0, 20) + "..."
-                : chat?.latestMessage?.message
+            {chat?.latestMessage?.message
+              ? chat.latestMessage.message.length > 20
+                ? chat.latestMessage.message.slice(0, 20) + "..."
+                : chat.latestMessage.message
               : "Start Messaging"}
           </span>
         </div>
+      </div>
+
+      {/* Right Side */}
+      <div className="text-xs text-white">
+        {chat?.latestMessage &&
+          formatMessageTime(chat?.latestMessage?.createdAt)}
       </div>
     </div>
   );
