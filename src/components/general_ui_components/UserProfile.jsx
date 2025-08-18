@@ -1,13 +1,28 @@
-import { Check, Pen, X } from "lucide-react";
+import { Check, CloudSnow, Pen, X } from "lucide-react";
 import ImageUploader from "./ImageUploader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { uploadProfileImage } from "../../feature/auth/authThunk";
+import { Tailspin } from "ldrs/react";
+import "ldrs/react/Tailspin.css";
+import { toast } from "react-toastify";
 
 function UserProfile({ setOpenProfile, setOpenFullProfile }) {
+  const dispatch = useDispatch();
   const [showSave, setShowSave] = useState(false);
   const [profileLink, setProfileLink] = useState();
+  const [uploadingStatus, setUploadingStatus] = useState(false);
+  const { isUploadingProfile } = useSelector((state) => state.auth);
+
   const handleSave = async () => {
-    console.log(profileLink);
     setShowSave(false);
+    setUploadingStatus(true);
+    const res = await dispatch(uploadProfileImage({ profileLink })).unwrap();
+    if (!isUploadingProfile) {
+      setUploadingStatus(false);
+      setOpenProfile(false);
+      toast.success("Profile updated Successfully!");
+    }
   };
 
   return (
@@ -16,14 +31,19 @@ function UserProfile({ setOpenProfile, setOpenFullProfile }) {
         {/* Header for the profile */}
         <div className="w-full flex items-center justify-between">
           <h1 className="font-bold text-xl">My Profile</h1>
-          <div className="flex gap-4">
-            {showSave ? (
+          <div className="flex items-center gap-4">
+            {(uploadingStatus || isUploadingProfile) && (
+              <Tailspin size="20" stroke="5" speed="0.9" color="green" />
+            )}
+            {showSave && (
               <Check
                 strokeWidth={3}
                 onClick={handleSave}
-                className="cursor-pointer bg-green-500 text-white size-10 p-2 rounded-full"
+                className="cursor-pointer bg-green-500 text-white size-6 p-2 rounded-full"
               />
-            ) : null}
+            )}
+
+            {/* edit pen */}
             <div className=" bg-slate-200 rouded size-10 rounded-full flex items-center justify-center">
               <Pen strokeWidth={3} size={20} className="cursor-pointer " />
             </div>
@@ -41,6 +61,7 @@ function UserProfile({ setOpenProfile, setOpenFullProfile }) {
             setShowSave={setShowSave}
             setOpenFullProfile={setOpenFullProfile}
             setProfileLink={setProfileLink}
+            setUploadingStatus={setUploadingStatus}
           />
           <h1 className="font-bold text-2xl">Mati Melkamu</h1>
           <p className="font-semibold flex items-center gap-2">

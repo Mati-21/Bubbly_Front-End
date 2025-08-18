@@ -51,3 +51,17 @@ export const logout = createAsyncThunk(
     }
   }
 );
+
+export const uploadProfileImage = createAsyncThunk(
+  "auth/uploadProfile",
+  async (profile, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`${BACKEND_URL}/user/uploadProfile`, {
+        profile,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);

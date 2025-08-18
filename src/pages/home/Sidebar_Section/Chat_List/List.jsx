@@ -10,7 +10,6 @@ function List({ chat, textRef }) {
   const dispatch = useDispatch();
 
   const otherUser = findOtherUser(chat.users, user._id);
-  console.log(otherUser);
 
   const handleChat = async (users) => {
     const receiver_id = getReceiverId(users, user._id);

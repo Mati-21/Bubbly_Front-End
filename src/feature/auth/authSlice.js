@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCurrentUser, login, registerUser, logout } from "./authThunk";
+import {
+  getCurrentUser,
+  login,
+  registerUser,
+  logout,
+  uploadProfileImage,
+} from "./authThunk";
 
 const initialState = {
   user: null,
@@ -7,6 +13,7 @@ const initialState = {
   error: "",
   status: "",
   hasLoaded: false,
+  isUploadingProfile: false,
 };
 
 export const userSlice = createSlice({
@@ -77,6 +84,24 @@ export const userSlice = createSlice({
       .addCase(logout.rejected, (state) => {
         state.status = "rejected";
         state.error = "Logout failed";
+      })
+
+      // upload profile
+      .addCase(uploadProfileImage.pending, (state) => {
+        state.status = "loading";
+        state.isUploadingProfile = true;
+      })
+      .addCase(uploadProfileImage.fulfilled, (state, action) => {
+        state.user = action.payload.updatedUser;
+        state.isAuthenticated = true;
+        state.status = "success";
+        state.hasLoaded = true;
+        state.isUploadingProfile = false;
+      })
+      .addCase(uploadProfileImage.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.data;
+        state.isUploadingProfile = false;
       });
   },
 });
