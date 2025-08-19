@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import auth from "../feature/auth/authSlice";
+import user from "../feature/user/userSlice";
 
 import chat from "../feature/chat/chatSlice";
 import persistReducer from "redux-persist/es/persistReducer";
@@ -18,6 +19,7 @@ const store = configureStore({
   reducer: {
     auth,
     chat: chatPersistedReducer,
+    user,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

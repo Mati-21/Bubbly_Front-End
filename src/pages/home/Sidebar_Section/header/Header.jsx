@@ -2,8 +2,12 @@ import { EllipsisVertical, LogOut, Menu, Pen, Search } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../../feature/auth/authThunk";
+import {
+  setMobileMenu,
+  setOpenProfile,
+} from "../../../../feature/user/userSlice";
 
-function Header({ openMobileMenu, setOpenProfile }) {
+function Header() {
   const [openSearch, setOpenSearch] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -20,7 +24,7 @@ function Header({ openMobileMenu, setOpenProfile }) {
         <div className="flex gap-2">
           <div className="size-12 bg-green-200 rounded-full overflow-hidden ">
             <img
-              onClick={() => setOpenProfile((prev) => !prev)}
+              onClick={() => dispatch(setOpenProfile(true))}
               src={user.picture[0]}
               alt=""
               className="h-full w-full object-cover cursor-pointer"
@@ -41,7 +45,10 @@ function Header({ openMobileMenu, setOpenProfile }) {
 
       {/* for mobile  */}
       <div className="flex items-center justify-between p-2 text-white sm:hidden border-b border-gray-800">
-        <div onClick={() => openMobileMenu()} className="cursor-pointer">
+        <div
+          onClick={() => dispatch(setMobileMenu(true))}
+          className="cursor-pointer"
+        >
           <Menu />
         </div>
         <div className="flex gap-2  items-center">

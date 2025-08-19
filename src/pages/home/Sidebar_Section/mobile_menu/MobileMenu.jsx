@@ -3,26 +3,41 @@ import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { logout } from "../../../../feature/auth/authThunk";
 import { clearChatState } from "../../../../feature/chat/chatSlice";
+import {
+  setMobileMenu,
+  setOpenProfile,
+} from "../../../../feature/user/userSlice";
 
-function MobileMenu({ mobileMenu, closeMobileMenu }) {
+function MobileMenu() {
   const { user } = useSelector((state) => state.auth);
+  const { mobileMenu } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
   const handleLogout = async (e) => {
     e.stopPropagation();
     dispatch(clearChatState());
     dispatch(logout());
   };
 
+  const handleMobileProfile = () => {
+    dispatch(setMobileMenu(false));
+    dispatch(setOpenProfile());
+  };
+
   return (
-    <div
-      onClick={closeMobileMenu}
+    <motion.div
+      onClick={() => dispatch(setMobileMenu(false))}
+      initial={{ x: -300 }}
+      animate={{ x: 0 }}
+      exit={{ x: -300 }}
+      transition={{ duration: 0.3 }}
       className={`fixed inset-0 z-50 sm:hidden backdrop-blur-sm transition-opacity duration-300 ${
         mobileMenu ? "opacity-100 visible" : "opacity-0 invisible"
       }`}
     >
       <motion.div
         initial={{ x: -300 }}
-        animate={{ x: mobileMenu ? 0 : -300 }}
+        animate={{ x: 0 }}
         exit={{ x: -300 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
         onClick={(e) => e.stopPropagation()}
@@ -33,7 +48,7 @@ function MobileMenu({ mobileMenu, closeMobileMenu }) {
           {/* First row */}
           <div className="flex items-center justify-between">
             <img
-              src={user.picture}
+              src={user.picture[0]}
               className="size-12 rounded-full object-cover"
               alt="Profile"
             />
@@ -53,7 +68,10 @@ function MobileMenu({ mobileMenu, closeMobileMenu }) {
 
         {/* setting */}
         <div className="mt-4 flex flex-col items-start">
-          <span className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-500/40 duration-300 transition-all  py-1 rounded">
+          <span
+            onClick={handleMobileProfile}
+            className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-500/40 duration-300 transition-all  py-1 rounded"
+          >
             <User size={16} />
             <p className="text-sm tracking-wider">View Profile</p>
           </span>
@@ -74,7 +92,7 @@ function MobileMenu({ mobileMenu, closeMobileMenu }) {
           </span>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
 

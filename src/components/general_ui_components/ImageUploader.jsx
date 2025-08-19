@@ -1,15 +1,12 @@
 import { useRef, useState } from "react";
 import { Camera } from "lucide-react";
 import { uploadProfile } from "../uploadToCloudniary/uploadImage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setOpenFullProfile } from "../../feature/user/userSlice";
 
-function ImageUploader({
-  setOpenFullProfile,
-  setShowSave,
-  setProfileLink,
-  setUploadingStatus,
-}) {
+function ImageUploader({ setShowSave, setProfileLink, setUploadingStatus }) {
   const imgRef = useRef();
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   console.log(user);
   const [preview, setPreview] = useState("");
@@ -33,12 +30,12 @@ function ImageUploader({
 
   return (
     <div className="mt-8">
-      <div className="size-40 rounded-full relative overflow-hidden">
+      <div className="lg:size-40 size-28 rounded-full relative overflow-hidden">
         <img
           src={preview || user.picture[0]}
           alt="profile"
           className="h-full w-full object-cover rounded-full cursor-pointer"
-          onClick={() => setOpenFullProfile((prev) => !prev)}
+          onClick={() => dispatch(setOpenFullProfile(true))}
         />
 
         {/* Overlay camera button */}

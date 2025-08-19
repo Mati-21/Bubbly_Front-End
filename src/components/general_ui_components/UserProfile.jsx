@@ -6,8 +6,9 @@ import { uploadProfileImage } from "../../feature/auth/authThunk";
 import { Tailspin } from "ldrs/react";
 import "ldrs/react/Tailspin.css";
 import { toast } from "react-toastify";
+import { setOpenProfile } from "../../feature/user/userSlice";
 
-function UserProfile({ setOpenProfile, setOpenFullProfile }) {
+function UserProfile() {
   const dispatch = useDispatch();
   const [showSave, setShowSave] = useState(false);
   const [profileLink, setProfileLink] = useState();
@@ -27,11 +28,11 @@ function UserProfile({ setOpenProfile, setOpenFullProfile }) {
 
   return (
     <div className="absolute inset-0 flex bg-gray-900/70 z-20 justify-center">
-      <div className="min-w-xs max-w-lg h-fit mt-36  w-full bg-slate-200 px-8 py-4 rounded-md">
+      <div className="min-w-xs max-w-lg h-fit mt-36  w-full bg-gray-600 lg:px-8 px-2 py-4 rounded-md">
         {/* Header for the profile */}
         <div className="w-full flex items-center justify-between">
-          <h1 className="font-bold text-xl">My Profile</h1>
-          <div className="flex items-center gap-4">
+          <h1 className="font-bold lg:text-xl text-sm">My Profile</h1>
+          <div className="flex items-center lg:gap-4 gap-2">
             {(uploadingStatus || isUploadingProfile) && (
               <Tailspin size="20" stroke="5" speed="0.9" color="green" />
             )}
@@ -44,13 +45,13 @@ function UserProfile({ setOpenProfile, setOpenFullProfile }) {
             )}
 
             {/* edit pen */}
-            <div className=" bg-slate-200 rouded size-10 rounded-full flex items-center justify-center">
+            <div className=" bg-slate-200/30 rouded lg:size-10 size-6 p-2 rounded-full flex items-center justify-center">
               <Pen strokeWidth={3} size={20} className="cursor-pointer " />
             </div>
             <X
               strokeWidth={3}
-              onClick={() => setOpenProfile(false)}
-              className="cursor-pointer bg-slate-200 size-10 p-2 rounded-full"
+              onClick={() => dispatch(setOpenProfile(false))}
+              className="cursor-pointer bg-slate-200/30 lg:size-10 size-6 p-2 rounded-full"
             />
           </div>
         </div>
@@ -59,11 +60,10 @@ function UserProfile({ setOpenProfile, setOpenFullProfile }) {
         <div className="flex justify-center items-center flex-col gap-2">
           <ImageUploader
             setShowSave={setShowSave}
-            setOpenFullProfile={setOpenFullProfile}
             setProfileLink={setProfileLink}
             setUploadingStatus={setUploadingStatus}
           />
-          <h1 className="font-bold text-2xl">Mati Melkamu</h1>
+          <h1 className="font-bold lg:text-2xl text-lg">Mati Melkamu</h1>
           <p className="font-semibold flex items-center gap-2">
             <span className="size-4 rounded-full bg-green-500 block"></span>
             Online

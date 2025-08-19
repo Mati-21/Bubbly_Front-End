@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import MainContainer from "./Main_Container/mainContainer";
 import Sidebar from "./Sidebar_Section/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,23 +15,16 @@ import FullScrenProfile from "../../components/general_ui_components/FullScrenPr
 function Home() {
   const dispatch = useDispatch();
   const { activeChat } = useSelector((state) => state.chat);
+  const { mobileMenu, openProfile, openFullProfile } = useSelector(
+    (state) => state.user
+  );
 
   // local states
   const { user } = useSelector((state) => state.auth);
-  const [mobileMenu, setMobileMenu] = useState(false);
-  const [openProfile, setOpenProfile] = useState(false);
-  const [openFullProfile, setOpenFullProfile] = useState(false);
 
   // sockets
   const textRef = useRef();
   const { socket } = useSocket();
-
-  const openMobileMenu = () => {
-    setMobileMenu(true);
-  };
-  const closeMobileMenu = () => {
-    setMobileMenu(false);
-  };
 
   // Join User
   useEffect(() => {
@@ -55,34 +48,16 @@ function Home() {
   return (
     <div className="h-screen min-h-screen w-screen min-w-[280px] grid grid-cols-12 bg-green-100 relative">
       {/* full screen profile */}
-      {openFullProfile ? (
-        <FullScrenProfile setOpenFullProfile={setOpenFullProfile} />
-      ) : null}
+      {openFullProfile ? <FullScrenProfile /> : null}
 
       {/* profile picture */}
-      {openProfile ? (
-        <UserProfile
-          setOpenProfile={setOpenProfile}
-          setOpenFullProfile={setOpenFullProfile}
-        />
-      ) : null}
+      {openProfile ? <UserProfile /> : null}
       {/* sidbar */}
-      <Sidebar
-        openMobileMenu={openMobileMenu}
-        textRef={textRef}
-        setOpenProfile={setOpenProfile}
-      />
+      <Sidebar textRef={textRef} />
       {/* Main Container if there is active chat */}
       {activeChat._id ? <MainContainer textRef={textRef} /> : <StartingPage />}
       {/* mobile menu */}
-      <AnimatePresence>
-        {mobileMenu && (
-          <MobileMenu
-            mobileMenu={mobileMenu}
-            closeMobileMenu={closeMobileMenu}
-          />
-        )}
-      </AnimatePresence>
+      <AnimatePresence>{mobileMenu && <MobileMenu />}</AnimatePresence>
     </div>
   );
 }

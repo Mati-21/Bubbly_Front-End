@@ -1,16 +1,18 @@
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setOpenFullProfile } from "../../feature/user/userSlice";
 
-function FullScrenProfile({ setOpenFullProfile }) {
+function FullScrenProfile() {
   const { user } = useSelector((state) => state.auth);
   const [activeIndex, setActiveIndex] = useState(0);
+  const dispatch = useDispatch();
   return (
     <div className="absolute inset-0 grid grid-cols-12 grid-rows-[1fr_100px] bg-slate-800 z-30 ">
       <X
         strokeWidth={3}
         className="cursor-pointer bg-slate-200 lg:size-10 p-2 rounded-full absolute top-5 right-5 z-20 "
-        onClick={() => setOpenFullProfile((prev) => !prev)}
+        onClick={() => dispatch(setOpenFullProfile(false))}
       />
       ;
       <ArrowRight
@@ -26,7 +28,7 @@ function FullScrenProfile({ setOpenFullProfile }) {
         <img
           src={user.picture[activeIndex]}
           alt="profile"
-          className="w-full h-[600px] object-bottom"
+          className="w-full h-[600px] object-cover"
         />
       </div>
       {/* Second row, from col 2 to col 12 */}
@@ -36,10 +38,11 @@ function FullScrenProfile({ setOpenFullProfile }) {
           <div className="w-96 gap-2 sideScroll flex overflow-x-scroll">
             {user.picture.map((image, i) => (
               <img
+                key={i}
                 src={image}
                 onClick={() => setActiveIndex(i)}
                 alt=""
-                className="h-20 w-20 object-cover rounded-lg cursor-pointer "
+                className="h-20 w-20 object-contain rounded-lg cursor-pointer "
               />
             ))}
           </div>

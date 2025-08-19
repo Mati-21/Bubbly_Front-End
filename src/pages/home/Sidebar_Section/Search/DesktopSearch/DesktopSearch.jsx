@@ -12,6 +12,7 @@ function DesktopSearch({ setSearchResult }) {
         `${import.meta.env.VITE_BACKEND_URL}/user/searchUser`,
         { value: search }
       );
+      console.log(data);
       setSearchResult(data);
     }
   };
