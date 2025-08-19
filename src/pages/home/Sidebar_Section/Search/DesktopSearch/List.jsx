@@ -1,7 +1,19 @@
+import { useDispatch } from "react-redux";
+import { open_create_chat } from "../../../../../feature/chat/chatThunk";
+
 function List({ chat }) {
-  console.log(chat);
+  const dispatch = useDispatch();
+
+  const handleClick = async (receiver_id) => {
+    console.log(receiver_id);
+    dispatch(open_create_chat(receiver_id));
+  };
+
   return (
-    <div className="w-full  flex items-center justify-between p-2 bg-gray-500 hover:bg-gray-600 duration-300 transition-all">
+    <div
+      onClick={() => handleClick(chat._id)}
+      className="w-full  flex items-center justify-between p-2 bg-gray-500 hover:bg-gray-600 duration-300 transition-all"
+    >
       <div className="flex  gap-2">
         <img
           src={chat.picture[0]}
