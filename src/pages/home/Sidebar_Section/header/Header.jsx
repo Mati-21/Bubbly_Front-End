@@ -6,6 +6,7 @@ import {
   setMobileMenu,
   setOpenProfile,
 } from "../../../../feature/user/userSlice";
+import MobileSearch from "../Search/MobileSearch/MobileSearch";
 
 function Header() {
   const [openSearch, setOpenSearch] = useState(false);
@@ -51,17 +52,8 @@ function Header() {
         >
           <Menu />
         </div>
-        <div className="flex gap-2  items-center">
-          <input
-            type="text"
-            className={`rounded-full  focus:border-none focus:outline-none border-none duration-500 transition-all ${
-              openSearch ? "w-48 px-2 py-1" : "w-0 p-0"
-            }`}
-          />
-          <div>
-            <Search onClick={() => setOpenSearch((prev) => !prev)} />
-          </div>
-        </div>
+        {/* Mobile Search */}
+        <MobileSearch openSearch={openSearch} setOpenSearch={setOpenSearch} />
       </div>
     </div>
   );
