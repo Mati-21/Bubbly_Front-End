@@ -7,9 +7,11 @@ import {
   setOpenProfile,
 } from "../../../../feature/user/userSlice";
 import MobileSearch from "../Search/MobileSearch/MobileSearch";
+import HeaderMenu from "./HeaderMenu";
 
 function Header() {
   const [openSearch, setOpenSearch] = useState(false);
+  const [showHeaderMenu, setShowHeaderMenu] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -37,10 +39,14 @@ function Header() {
           </div>
         </div>
         {/* header Right */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 relative">
           <Pen size={18} className="cursor-pointer" />
-          <EllipsisVertical className="cursor-pointer" />
+          <EllipsisVertical
+            onClick={() => setShowHeaderMenu((prev) => !prev)}
+            className="cursor-pointer"
+          />
           <LogOut className="cursor-pointer" onClick={() => handleLogout()} />
+          {showHeaderMenu ? <HeaderMenu /> : null}
         </div>
       </div>
 
