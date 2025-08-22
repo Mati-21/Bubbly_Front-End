@@ -12,7 +12,7 @@ function List({ chat }) {
   return (
     <div
       onClick={() => handleClick(chat._id)}
-      className="w-full  flex items-center justify-between p-2 bg-gray-500 hover:bg-gray-600 duration-300 transition-all"
+      className="w-full text-white  flex items-center justify-between p-2 bg-gray-800 hover:bg-gray-600 duration-300 transition-all"
     >
       <div className="flex  gap-2">
         <img
@@ -21,8 +21,8 @@ function List({ chat }) {
           className="size-12 rounded-full object-cover"
         />
         <div>
-          <h2 className="font-bold text-gray-800">{chat.name}</h2>
-          <p className="text-sm font-semibold text-gray-800">{chat.bio}</p>
+          <h2 className="font-bold ">{chat.name}</h2>
+          <p className="text-sm font-semibold ">{chat.bio}</p>
         </div>
       </div>
     </div>
