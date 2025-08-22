@@ -17,7 +17,7 @@ function ChatHeader() {
         <div onClick={handleActiveChat} className="sm:hidden">
           <ArrowLeftIcon />
         </div>
-        <div className="size-10 rounded-full overflow-hidden ">
+        <div className="size-10 cursor-pointer rounded-full overflow-hidden ">
           <img
             src={activeChat.picture[0]}
             alt=""
