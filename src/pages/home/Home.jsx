@@ -8,7 +8,7 @@ import { AnimatePresence } from "framer-motion";
 import StartingPage from "./Main_Container/StartPage/StartingPage";
 import Preview from "./Preview/Preview";
 import { useSocket } from "../../context/useSocket";
-import { updateMessage } from "../../feature/chat/chatSlice";
+import { updateMessage, updateOnlineUsers } from "../../feature/chat/chatSlice";
 import UserProfile from "../../components/general_ui_components/UserProfile";
 import FullScrenProfile from "../../components/general_ui_components/FullScrenProfile";
 
@@ -33,6 +33,11 @@ function Home() {
     socket.on("receiveMessage", (Message) => {
       console.log(Message);
       dispatch(updateMessage(Message));
+    });
+
+    // get online user
+    socket.on("get-online-users", (users) => {
+      dispatch(updateOnlineUsers(users));
     });
   }, [user, dispatch, socket]);
 

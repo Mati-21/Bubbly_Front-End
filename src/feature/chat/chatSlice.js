@@ -13,6 +13,7 @@ const initialState = {
   messages: [],
   activeChat: {},
   files: [],
+  onlineUsers: [],
 };
 
 const chatSlice = createSlice({
@@ -36,6 +37,10 @@ const chatSlice = createSlice({
     },
     clearFiles: (state) => {
       state.files = [];
+    },
+
+    updateOnlineUsers: (state, action) => {
+      state.onlineUsers = action.payload;
     },
 
     updateMessage: (state, action) => {
@@ -136,6 +141,7 @@ export const {
   clearChatState,
   updateMessage,
   clearFiles,
+  updateOnlineUsers,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

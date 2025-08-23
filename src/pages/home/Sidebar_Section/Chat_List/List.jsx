@@ -5,19 +5,23 @@ import {
   getReceiverId,
 } from "../../../../utils/getId/getreceiverId";
 import { formatMessageTime } from "../../../../utils/formatDate";
+import { checkOnline } from "../../../../utils/checkOnline";
 
 function List({ chat, textRef }) {
   const { user } = useSelector((state) => state.auth);
+  const { onlineUsers } = useSelector((state) => state.chat);
   const dispatch = useDispatch();
 
   const otherUser = findOtherUser(chat.users, user._id);
+  const otherUserId = otherUser._id;
+
+  const isOnline = checkOnline(onlineUsers, otherUserId);
 
   const handleChat = async (users) => {
     const receiver_id = getReceiverId(users, user._id);
     textRef.current?.focus();
 
     const activeChat = await dispatch(open_create_chat(receiver_id));
-    console.log(chat);
   };
 
   return (
@@ -27,10 +31,13 @@ function List({ chat, textRef }) {
     >
       {/* left side  */}
       <div className="text-white flex items-center gap-2">
-        <div className="overflow-hidden size-12 rounded-full">
+        <div className=" size-12 rounded-full relative">
+          {isOnline && (
+            <span className="absolute bottom-0 right-0 size-3 rounded-full bg-green-400 "></span>
+          )}
           <img
             src={otherUser.picture[0]}
-            className="h-full w-full object-cover"
+            className="h-full w-full rounded-full object-cover"
             alt=""
           />
         </div>
