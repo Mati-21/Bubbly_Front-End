@@ -8,7 +8,7 @@ function Message({ message, me }) {
         className={`max-w-sm  min-w-[120px] px-2 py-1 rounded-lg ${
           me
             ? "bg-blue-800 text-white rounded-br-none"
-            : "bg-slate-600/70 text-white rounded-bl-none"
+            : "bg-slate-800/70 text-white rounded-bl-none"
         }`}
       >
         {/* Message */}

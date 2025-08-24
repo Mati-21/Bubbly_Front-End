@@ -6,7 +6,7 @@ import { getChats } from "../../feature/chat/chatThunk";
 import MobileMenu from "./Sidebar_Section/mobile_menu/MobileMenu";
 import { AnimatePresence } from "framer-motion";
 import StartingPage from "./Main_Container/StartPage/StartingPage";
-import Preview from "./Preview/Preview";
+
 import { useSocket } from "../../context/useSocket";
 import { updateMessage, updateOnlineUsers } from "../../feature/chat/chatSlice";
 import UserProfile from "../../components/general_ui_components/UserProfile";
@@ -37,6 +37,7 @@ function Home() {
 
     // get online user
     socket.on("get-online-users", (users) => {
+      console.log("logout emitted");
       dispatch(updateOnlineUsers(users));
     });
   }, [user, dispatch, socket]);

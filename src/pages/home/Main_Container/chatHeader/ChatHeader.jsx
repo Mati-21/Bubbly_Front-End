@@ -1,10 +1,17 @@
 import { ArrowLeftIcon, EllipsisVertical, Search } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearActiveChat } from "../../../../feature/chat/chatSlice";
+import { checkOnline } from "../../../../utils/checkOnline";
+import { getCurrentUserId } from "../../../../utils/getCurrentUserId";
 
 function ChatHeader() {
-  const { activeChat } = useSelector((state) => state.chat);
+  const { activeChat, onlineUsers } = useSelector((state) => state.chat);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const otherUserId = getCurrentUserId(user._id, activeChat);
+
+  const isOnline = checkOnline(onlineUsers, otherUserId);
 
   const handleActiveChat = () => {
     dispatch(clearActiveChat());
@@ -28,7 +35,13 @@ function ChatHeader() {
           <h1 className="font-bold text-sm tracking-wider">
             {activeChat.name}
           </h1>
-          <span className="text-xs tracking-wider">Online</span>
+          {isOnline ? (
+            <span className="text-xs tracking-wider">Online</span>
+          ) : (
+            <p className="text-xs text-white font-semibold">
+              last seen recently
+            </p>
+          )}
         </div>
       </div>
       {/* header Right */}

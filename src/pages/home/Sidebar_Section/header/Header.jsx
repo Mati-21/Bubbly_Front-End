@@ -8,15 +8,18 @@ import {
 } from "../../../../feature/user/userSlice";
 import MobileSearch from "../Search/MobileSearch/MobileSearch";
 import HeaderMenu from "./HeaderMenu";
+import { useSocket } from "../../../../context/useSocket";
 
 function Header() {
   const [openSearch, setOpenSearch] = useState(false);
   const [showHeaderMenu, setShowHeaderMenu] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const { socket } = useSocket();
 
   const handleLogout = async () => {
     await dispatch(logout());
+    socket.emit("logout", user._id);
   };
 
   return (
