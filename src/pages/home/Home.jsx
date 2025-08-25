@@ -31,13 +31,11 @@ function Home() {
     socket.emit("user joins", user._id);
 
     socket.on("receiveMessage", (Message) => {
-      console.log(Message);
       dispatch(updateMessage(Message));
     });
 
     // get online user
     socket.on("get-online-users", (users) => {
-      console.log("logout emitted");
       dispatch(updateOnlineUsers(users));
     });
   }, [user, dispatch, socket]);

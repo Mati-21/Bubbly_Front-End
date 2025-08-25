@@ -9,6 +9,7 @@ import {
 import MobileSearch from "../Search/MobileSearch/MobileSearch";
 import HeaderMenu from "./HeaderMenu";
 import { useSocket } from "../../../../context/useSocket";
+import { clearHistory } from "../../../../feature/chat/chatSlice";
 
 function Header() {
   const [openSearch, setOpenSearch] = useState(false);
@@ -19,6 +20,8 @@ function Header() {
 
   const handleLogout = async () => {
     await dispatch(logout());
+    dispatch(clearHistory());
+
     socket.emit("logout", user._id);
   };
 

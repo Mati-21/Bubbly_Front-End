@@ -15,6 +15,7 @@ function List({ chat, textRef }) {
   const otherUser = findOtherUser(chat.users, user._id);
   const otherUserId = otherUser._id;
 
+  console.log(chat);
   const isOnline = checkOnline(onlineUsers, otherUserId);
 
   const handleChat = async (users) => {
@@ -44,7 +45,7 @@ function List({ chat, textRef }) {
         <div className=" flex flex-col ">
           <span className="font-bold text-md sm:text-md">{otherUser.name}</span>
 
-          <span className="text-xs sm:text-md lg:hidden">
+          <span className="text-xs sm:text-md ">
             {chat?.latestMessage?.message
               ? chat.latestMessage.message.length > 20
                 ? chat.latestMessage.message.slice(0, 20) + "..."
@@ -55,9 +56,17 @@ function List({ chat, textRef }) {
       </div>
 
       {/* Right Side */}
-      <div className="text-xs text-white">
-        {chat?.latestMessage &&
-          formatMessageTime(chat?.latestMessage?.createdAt)}
+      <div className="text-xs text-white items-center gap-1 flex flex-col">
+        <p>
+          {chat?.latestMessage &&
+            formatMessageTime(chat?.latestMessage?.createdAt)}
+        </p>
+
+        {chat.unreadCount > 0 && (
+          <p className="size-5 bg-green-400 rounded-full flex justify-center items-center">
+            {chat.unreadCount}
+          </p>
+        )}
       </div>
     </div>
   );

@@ -23,6 +23,15 @@ const chatSlice = createSlice({
     clearActiveChat: (state) => {
       state.activeChat = {};
     },
+    clearHistory: (state) => {
+      state.status = "";
+      state.error = "";
+      state.chats = [];
+      state.messages = [];
+      state.activeChat = {};
+      state.files = [];
+      state.onlineUsers = [];
+    },
     clearChatState: (state) => {
       state.status = "";
       state.error = "";
@@ -141,6 +150,7 @@ export const {
   clearChatState,
   updateMessage,
   clearFiles,
+  clearHistory,
   updateOnlineUsers,
 } = chatSlice.actions;
 
