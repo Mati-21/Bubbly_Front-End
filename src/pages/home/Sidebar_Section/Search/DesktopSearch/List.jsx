@@ -1,11 +1,12 @@
 import { useDispatch } from "react-redux";
 import { open_create_chat } from "../../../../../feature/chat/chatThunk";
 
-function List({ chat }) {
+function List({ chat, setSearchResult }) {
   const dispatch = useDispatch();
 
   const handleClick = async (receiver_id) => {
     console.log(receiver_id);
+    setSearchResult([]);
     dispatch(open_create_chat(receiver_id));
   };
 

@@ -21,7 +21,10 @@ function Sidebar({ textRef }) {
       <DesktopSearch setSearchResult={setSearchResult} />
       {/* Chat List for Desktop */}
       {searchResult.length > 0 ? (
-        <SearchResult searchResult={searchResult} />
+        <SearchResult
+          searchResult={searchResult}
+          setSearchResult={setSearchResult}
+        />
       ) : (
         <ChatList textRef={textRef} />
       )}
