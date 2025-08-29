@@ -4,6 +4,7 @@ import {
   open_create_chat,
   send_Message,
   getMessages,
+  updateAndGetChats,
 } from "./chatThunk";
 
 const initialState = {
@@ -139,6 +140,18 @@ const chatSlice = createSlice({
         state.messages = action.payload;
       })
       .addCase(getMessages.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || "Failed to fetch chats";
+      })
+      .addCase(updateAndGetChats.pending, (state) => {
+        state.status = "loading";
+        state.error = "";
+      })
+      .addCase(updateAndGetChats.fulfilled, (state, action) => {
+        state.status = "success";
+        state.chats = action.payload;
+      })
+      .addCase(updateAndGetChats.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch chats";
       });

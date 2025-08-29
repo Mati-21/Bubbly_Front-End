@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { open_create_chat } from "../../../../feature/chat/chatThunk";
+import {
+  open_create_chat,
+  updateAndGetChats,
+} from "../../../../feature/chat/chatThunk";
 import {
   findOtherUser,
   getReceiverId,
@@ -18,16 +21,21 @@ function List({ chat, textRef }) {
   console.log(chat);
   const isOnline = checkOnline(onlineUsers, otherUserId);
 
-  const handleChat = async (users) => {
+  const handleChat = async (chat) => {
+    const users = chat.users;
     const receiver_id = getReceiverId(users, user._id);
     textRef.current?.focus();
 
-    const activeChat = await dispatch(open_create_chat(receiver_id));
+    await dispatch(updateAndGetChats(chat._id));
+
+    await dispatch(open_create_chat(receiver_id));
   };
+
+  const isCountForMe = chat?.latestMessage?.readby.includes(user._id);
 
   return (
     <div
-      onClick={() => handleChat(chat.users)}
+      onClick={() => handleChat(chat)}
       className="flex items-center justify-between p-2 hover:bg-slate-200/50 duration-300 transition-all hover:rounded cursor-pointer border-b border-gray-200/40"
     >
       {/* left side  */}
@@ -62,7 +70,7 @@ function List({ chat, textRef }) {
             formatMessageTime(chat?.latestMessage?.createdAt)}
         </p>
 
-        {chat.unreadCount > 0 && (
+        {chat.unreadCount > 0 && !isCountForMe && (
           <p className="size-5 bg-green-400 rounded-full flex justify-center items-center">
             {chat.unreadCount}
           </p>

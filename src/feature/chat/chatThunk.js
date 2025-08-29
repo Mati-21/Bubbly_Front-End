@@ -53,3 +53,17 @@ export const send_Message = createAsyncThunk(
     }
   }
 );
+
+export const updateAndGetChats = createAsyncThunk(
+  "updateChat/getchats",
+  async (chat_id, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.patch(
+        `${BACKEND_URL}/chat/markMessageAsRead/${chat_id}`
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error.message);
+    }
+  }
+);
