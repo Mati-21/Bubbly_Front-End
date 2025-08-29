@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import MainContainer from "./Main_Container/mainContainer";
 import Sidebar from "./Sidebar_Section/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { getChats } from "../../feature/chat/chatThunk";
+import { getChats, updateAndGetChats } from "../../feature/chat/chatThunk";
 import MobileMenu from "./Sidebar_Section/mobile_menu/MobileMenu";
 import { AnimatePresence } from "framer-motion";
 import StartingPage from "./Main_Container/StartPage/StartingPage";
@@ -18,6 +18,7 @@ function Home() {
   const { mobileMenu, openProfile, openFullProfile } = useSelector(
     (state) => state.user
   );
+  console.log("Active ", activeChat);
 
   // local states
   const { user } = useSelector((state) => state.auth);
@@ -31,6 +32,10 @@ function Home() {
     socket.emit("user joins", user._id);
 
     socket.on("receiveMessage", (Message) => {
+      if (activeChat._id === Message.chat._id) {
+        console.log("straon");
+        dispatch(updateAndGetChats(Message.chat._id));
+      }
       dispatch(updateMessage(Message));
     });
 

@@ -56,23 +56,46 @@ const chatSlice = createSlice({
     updateMessage: (state, action) => {
       const incoming = action.payload;
 
+      const users = incoming.chat.users.map((user) => user._id);
+
       const exists = state.messages.some((m) => m._id === incoming._id);
-      if (!exists) {
-        state.messages = [...state.messages, incoming];
+      const checkActive = state.activeChat._id === action.payload.chat._id;
+
+      if (!exists && checkActive) {
+        const brandnewMessage = {
+          ...incoming,
+          readby: [...users],
+        };
+        console.log(brandnewMessage);
+        state.messages = [...state.messages, brandnewMessage];
       }
 
       const latestMessage = action.payload;
 
+      const currentChat = state.chats.find(
+        (chat) => chat._id === action.payload.chat._id
+      );
+
+      let unreadCount = currentChat?.unreadCount;
+
+      if (!checkActive) {
+        if (unreadCount) {
+          unreadCount = unreadCount + 1;
+        } else {
+          unreadCount = 1;
+        }
+      }
+
       let oneconvo = {
         ...action.payload.chat,
         latestMessage,
+        unreadCount: unreadCount || null,
       };
+      console.log(oneconvo);
 
       let newChats = [...state.chats].filter((convo) => {
         return convo._id !== oneconvo._id;
       });
-
-      console.log(oneconvo);
 
       newChats.unshift(oneconvo);
       state.chats = newChats;

@@ -1,7 +1,15 @@
-import { CheckCheck } from "lucide-react";
+import { Check, CheckCheck } from "lucide-react";
 import { formatMessageTime } from "../../../../utils/formatDate";
+import { getOtherUserId } from "../../../../utils/getCurrentUserId";
+import { useSelector } from "react-redux";
 
 function Message({ message, me }) {
+  const { user } = useSelector((state) => state.auth);
+
+  const otherUser = getOtherUserId(user._id, message.chat);
+
+  const isRead = message.readby.includes(otherUser);
+
   return (
     <div className={`w-full    flex ${me ? "justify-end" : "justify-start"}`}>
       <div
@@ -18,11 +26,12 @@ function Message({ message, me }) {
         >
           {message.message}
         </p>
+        {/* <Check/> */}
 
         {/* Time and Check */}
         <div className="flex items-center justify-end gap-1 mt-1 text-[10px] text-gray-100">
           <span>{formatMessageTime(message?.createdAt)}</span>
-          {me && <CheckCheck size={14} className="text-blue-100" />}
+          {me ? isRead ? <CheckCheck size={14} /> : <Check size={14} /> : ""}
         </div>
       </div>
     </div>

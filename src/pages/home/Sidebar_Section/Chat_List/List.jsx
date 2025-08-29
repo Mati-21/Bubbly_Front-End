@@ -18,7 +18,6 @@ function List({ chat, textRef }) {
   const otherUser = findOtherUser(chat.users, user._id);
   const otherUserId = otherUser._id;
 
-  console.log(chat);
   const isOnline = checkOnline(onlineUsers, otherUserId);
 
   const handleChat = async (chat) => {
