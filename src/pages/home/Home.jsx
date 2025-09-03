@@ -11,14 +11,15 @@ import { useSocket } from "../../context/useSocket";
 import { updateMessage, updateOnlineUsers } from "../../feature/chat/chatSlice";
 import UserProfile from "../../components/general_ui_components/UserProfile";
 import FullScrenProfile from "../../components/general_ui_components/FullScrenProfile";
+import CreateGroup from "./CreateGroup/CreateGroup";
 
 function Home() {
   const dispatch = useDispatch();
   const { activeChat } = useSelector((state) => state.chat);
-  const { mobileMenu, openProfile, openFullProfile } = useSelector(
-    (state) => state.user
+
+  const { mobileMenu, openProfile, openFullProfile, createGroup } = useSelector(
+    (state) => state.ui
   );
-  console.log("Active ", activeChat);
 
   // local states
   const { user } = useSelector((state) => state.auth);
@@ -43,7 +44,7 @@ function Home() {
     socket.on("get-online-users", (users) => {
       dispatch(updateOnlineUsers(users));
     });
-  }, [user, dispatch, socket]);
+  }, [user, dispatch, socket, activeChat._id]);
 
   // fetch chats for the user
   useEffect(() => {
@@ -53,6 +54,8 @@ function Home() {
       console.log(error);
     }
   }, [dispatch]);
+
+  console.log(createGroup);
 
   return (
     <div className="h-screen min-h-screen w-screen min-w-[280px] grid grid-cols-12 bg bg-slate-600 relative">
@@ -67,6 +70,9 @@ function Home() {
       {activeChat._id ? <MainContainer textRef={textRef} /> : <StartingPage />}
       {/* mobile menu */}
       <AnimatePresence>{mobileMenu && <MobileMenu />}</AnimatePresence>
+
+      {/* Create group */}
+      {createGroup ? <CreateGroup /> : null}
     </div>
   );
 }

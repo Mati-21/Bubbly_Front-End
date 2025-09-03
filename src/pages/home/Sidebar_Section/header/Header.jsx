@@ -1,11 +1,20 @@
-import { EllipsisVertical, LogOut, Menu, Pen, Search } from "lucide-react";
+import {
+  EllipsisVertical,
+  LogOut,
+  Menu,
+  MoreHorizontal,
+  Pen,
+  Search,
+  X,
+} from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../../feature/auth/authThunk";
 import {
   setMobileMenu,
   setOpenProfile,
-} from "../../../../feature/user/userSlice";
+  setShowHeaderMenu,
+} from "../../../../feature/ui/ui";
 import MobileSearch from "../Search/MobileSearch/MobileSearch";
 import HeaderMenu from "./HeaderMenu";
 import { useSocket } from "../../../../context/useSocket";
@@ -13,8 +22,10 @@ import { clearHistory } from "../../../../feature/chat/chatSlice";
 
 function Header() {
   const [openSearch, setOpenSearch] = useState(false);
-  const [showHeaderMenu, setShowHeaderMenu] = useState(false);
   const { user } = useSelector((state) => state.auth);
+  const { showHeaderMenu } = useSelector((state) => state.ui);
+  console.log(showHeaderMenu);
+
   const dispatch = useDispatch();
   const { socket } = useSocket();
 
@@ -47,10 +58,14 @@ function Header() {
         {/* header Right */}
         <div className="flex items-center gap-2 relative">
           <Pen size={18} className="cursor-pointer" />
-          <EllipsisVertical
-            onClick={() => setShowHeaderMenu((prev) => !prev)}
-            className="cursor-pointer"
-          />
+          {showHeaderMenu ? (
+            <X onClick={() => dispatch(setShowHeaderMenu())} />
+          ) : (
+            <MoreHorizontal
+              onClick={() => dispatch(setShowHeaderMenu())}
+              className="cursor-pointer"
+            />
+          )}
           <LogOut className="cursor-pointer" onClick={() => handleLogout()} />
           {showHeaderMenu ? <HeaderMenu /> : null}
         </div>

@@ -1,7 +1,7 @@
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setOpenFullProfile } from "../../feature/user/userSlice";
+import { setOpenFullProfile } from "../../feature/ui/ui";
 
 function FullScrenProfile() {
   const { user } = useSelector((state) => state.auth);

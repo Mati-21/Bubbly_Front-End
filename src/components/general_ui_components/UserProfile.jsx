@@ -6,7 +6,7 @@ import { uploadProfileImage } from "../../feature/auth/authThunk";
 import { Tailspin } from "ldrs/react";
 import "ldrs/react/Tailspin.css";
 import { toast } from "react-toastify";
-import { setOpenProfile } from "../../feature/user/userSlice";
+import { setOpenProfile } from "../../feature/ui/ui";
 
 function UserProfile() {
   const dispatch = useDispatch();

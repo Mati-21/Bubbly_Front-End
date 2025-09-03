@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { logout } from "../../../../feature/auth/authThunk";
 import { clearChatState } from "../../../../feature/chat/chatSlice";
-import {
-  setMobileMenu,
-  setOpenProfile,
-} from "../../../../feature/user/userSlice";
+import { setMobileMenu, setOpenProfile } from "../../../../feature/ui/ui";
 
 function MobileMenu() {
   const { user } = useSelector((state) => state.auth);

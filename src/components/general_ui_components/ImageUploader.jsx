@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Camera } from "lucide-react";
 import { uploadProfile } from "../uploadToCloudniary/uploadImage";
 import { useDispatch, useSelector } from "react-redux";
-import { setOpenFullProfile } from "../../feature/user/userSlice";
+import { setOpenFullProfile } from "../../feature/ui/ui";
 
 function ImageUploader({ setShowSave, setProfileLink, setUploadingStatus }) {
   const imgRef = useRef();
