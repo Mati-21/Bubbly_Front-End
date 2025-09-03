@@ -31,6 +31,7 @@ function List({ chat, textRef }) {
   };
 
   const isCountForMe = chat?.latestMessage?.readby.includes(user._id);
+  console.log(chat.picture[0]);
 
   return (
     <div

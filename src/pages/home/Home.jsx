@@ -55,8 +55,6 @@ function Home() {
     }
   }, [dispatch]);
 
-  console.log(createGroup);
-
   return (
     <div className="h-screen min-h-screen w-screen min-w-[280px] grid grid-cols-12 bg bg-slate-600 relative">
       {/* full screen profile */}

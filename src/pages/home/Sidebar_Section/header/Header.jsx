@@ -24,7 +24,6 @@ function Header() {
   const [openSearch, setOpenSearch] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const { showHeaderMenu } = useSelector((state) => state.ui);
-  console.log(showHeaderMenu);
 
   const dispatch = useDispatch();
   const { socket } = useSocket();
