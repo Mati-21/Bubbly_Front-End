@@ -15,8 +15,10 @@ export const getChats = createAsyncThunk(
 );
 export const open_create_chat = createAsyncThunk(
   "chat/open_create",
-  async (receiver_id, { rejectWithValue }) => {
+  async (value, { rejectWithValue }) => {
     try {
+      const { receiver_id, isGroup } = value;
+
       const { data } = await axios.post(`${BACKEND_URL}/chat`, { receiver_id });
       return data;
     } catch (error) {

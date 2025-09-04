@@ -26,8 +26,9 @@ function List({ chat, textRef }) {
     textRef.current?.focus();
 
     await dispatch(updateAndGetChats(chat._id));
+    const value = { receiver_id, isGroup: chat.isGroup ? chat._id : false };
 
-    await dispatch(open_create_chat(receiver_id));
+    await dispatch(open_create_chat(value));
   };
 
   const isCountForMe = chat?.latestMessage?.readby.includes(user._id);
