@@ -6,6 +6,7 @@ import { useState } from "react";
 import axios from "axios";
 import AsyncSelect from "react-select/async";
 import Input from "./Input";
+import { createGroup } from "../../../feature/chat/chatThunk";
 
 function CreateGroup() {
   const dispatch = useDispatch();
@@ -39,12 +40,22 @@ function CreateGroup() {
     }
   };
 
-  const create = () => {
+  const handleCreateGroup = async () => {
     const data = {
       groupName,
       selectedUsers,
     };
-    console.log(data);
+    const users = [];
+    data.selectedUsers.forEach((user) => users.push(user.value));
+
+    const value = {
+      users,
+      name: data.groupName,
+    };
+    console.log(value);
+
+    const newGroup = await dispatch(createGroup(value));
+    console.log(newGroup);
 
     // ✅ Reset all state
     setGroupName(""); // clear group name
@@ -93,7 +104,7 @@ function CreateGroup() {
           className="text-white cursor-pointer rounded-md bg-slate-400 p-2 text-center 
              shadow-inner shadow-slate-500/50 hover:shadow-[4px_4px_15px_#00000033, -4px_-4px_15px_#ffffff33] 
              transition-shadow duration-300"
-          onClick={() => create()}
+          onClick={() => handleCreateGroup()}
         >
           Create Group
         </div>

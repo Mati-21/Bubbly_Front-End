@@ -66,3 +66,19 @@ export const updateAndGetChats = createAsyncThunk(
     }
   }
 );
+
+export const createGroup = createAsyncThunk(
+  "chat/create_Group",
+  async (value, { rejectWithValue }) => {
+    try {
+      const { name, users } = value;
+      const { data } = await axios.post(`${BACKEND_URL}/chat/group`, {
+        name,
+        users,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error.message);
+    }
+  }
+);

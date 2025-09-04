@@ -31,7 +31,7 @@ function List({ chat, textRef }) {
   };
 
   const isCountForMe = chat?.latestMessage?.readby.includes(user._id);
-  console.log(chat.picture[0]);
+  console.log(chat);
 
   return (
     <div
@@ -45,13 +45,15 @@ function List({ chat, textRef }) {
             <span className="absolute bottom-0 right-0 size-3 rounded-full bg-green-400 "></span>
           )}
           <img
-            src={otherUser.picture[0]}
+            src={chat.isGroup ? chat.picture[0] : otherUser.picture[0]}
             className="h-full w-full rounded-full object-cover"
             alt=""
           />
         </div>
         <div className=" flex flex-col ">
-          <span className="font-bold text-md sm:text-md">{otherUser.name}</span>
+          <span className="font-bold text-md sm:text-md">
+            {chat.isGroup ? chat.name : otherUser.name}
+          </span>
 
           <span className="text-xs sm:text-md ">
             {chat?.latestMessage?.message
