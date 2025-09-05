@@ -15,6 +15,7 @@ function Options({ files, setActiveIndex }) {
               <div className="absolute top-0 right-0 h-4 w-4 bg-white flex items-center justify-center">
                 <X size={14} color="red" />
               </div>
+
               {/* Image */}
               {file.type === "image" && (
                 <img
@@ -24,18 +25,18 @@ function Options({ files, setActiveIndex }) {
                 />
               )}
               {/* Video */}
-              {file.type === "image" && (
+              {file.type === "VIDEO" && (
                 <img
-                  src={file.imgData}
+                  src={`/images/${file.type}.png`}
                   alt="preview"
                   className="w-full h-full object-cover object-top"
                 />
               )}
-              {/* File */}
+
               {file.type !== "image" && file.type !== "video" && (
                 <div className="flex items-center justify-center h-full">
                   <img
-                    src={`../../../../../public/images/${file.type}.png`}
+                    src={`/images/${file.type}.png`}
                     alt={file.type}
                     className="w-full h-full object-contain"
                   />
