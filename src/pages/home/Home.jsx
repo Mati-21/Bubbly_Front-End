@@ -34,9 +34,9 @@ function Home() {
 
     socket.on("receiveMessage", (Message) => {
       if (activeChat._id === Message.chat._id) {
-        console.log("straon");
         dispatch(updateAndGetChats(Message.chat._id));
       }
+      console.log(Message);
       dispatch(updateMessage(Message));
     });
 

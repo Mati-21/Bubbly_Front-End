@@ -6,7 +6,8 @@ import { useState } from "react";
 import axios from "axios";
 import AsyncSelect from "react-select/async";
 import Input from "./Input";
-import { createGroup } from "../../../feature/chat/chatThunk";
+import { createGroup, open_create_chat } from "../../../feature/chat/chatThunk";
+import { updateChatsOrder } from "../../../feature/chat/chatSlice";
 
 function CreateGroup() {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ function CreateGroup() {
       selectedUsers,
     };
     const users = [];
+    const receiver_id = "";
     data.selectedUsers.forEach((user) => users.push(user.value));
 
     const value = {
@@ -54,8 +56,11 @@ function CreateGroup() {
     };
     console.log(value);
 
-    const newGroup = await dispatch(createGroup(value));
-    console.log(newGroup);
+    const { payload } = await dispatch(createGroup(value));
+    console.log(payload);
+    const groupData = { receiver_id, isGroup: payload._id };
+    await dispatch(open_create_chat(groupData));
+    await dispatch(updateChatsOrder(payload));
 
     // ✅ Reset all state
     setGroupName(""); // clear group name

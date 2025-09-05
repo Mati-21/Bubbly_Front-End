@@ -53,9 +53,14 @@ const chatSlice = createSlice({
       state.onlineUsers = action.payload;
     },
 
+    updateChatsOrder: (state, action) => {
+      state.chats = [...state.chats, action.payload];
+    },
+
     updateMessage: (state, action) => {
       const incoming = action.payload;
 
+      console.log(incoming.chat);
       const users = incoming.chat.users.map((user) => user._id);
 
       const exists = state.messages.some((m) => m._id === incoming._id);
@@ -188,6 +193,7 @@ export const {
   clearFiles,
   clearHistory,
   updateOnlineUsers,
+  updateChatsOrder,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

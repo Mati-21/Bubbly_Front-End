@@ -9,11 +9,13 @@ import {
 } from "../../../../utils/getId/getreceiverId";
 import { formatMessageTime } from "../../../../utils/formatDate";
 import { checkOnline } from "../../../../utils/checkOnline";
+import { useSocket } from "../../../../context/useSocket";
 
 function List({ chat, textRef }) {
   const { user } = useSelector((state) => state.auth);
   const { onlineUsers } = useSelector((state) => state.chat);
   const dispatch = useDispatch();
+  const { socket } = useSocket();
 
   const otherUser = findOtherUser(chat.users, user._id);
   const otherUserId = otherUser._id;
@@ -29,10 +31,13 @@ function List({ chat, textRef }) {
     const value = { receiver_id, isGroup: chat.isGroup ? chat._id : false };
 
     await dispatch(open_create_chat(value));
+
+    if (chat.isGroup === true) {
+      socket.emit("joinGroupChat", chat._id);
+    }
   };
 
   const isCountForMe = chat?.latestMessage?.readby.includes(user._id);
-  console.log(chat);
 
   return (
     <div

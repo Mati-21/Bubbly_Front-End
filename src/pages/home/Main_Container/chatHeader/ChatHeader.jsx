@@ -16,7 +16,6 @@ function ChatHeader() {
   const handleActiveChat = () => {
     dispatch(clearActiveChat());
   };
-  console.log(activeChat);
 
   return (
     <div className="px-4 py-1 flex items-center justify-between bg-slate-500">
