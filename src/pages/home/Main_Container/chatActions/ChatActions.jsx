@@ -8,12 +8,14 @@ import EmojiComponent from "./EmojiPicker/EmojiComponent";
 import { uploadFiles } from "../../../../utils/UploadFiles";
 import { clearFiles } from "../../../../feature/chat/chatSlice";
 import { useSocket } from "../../../../context/useSocket";
+import { Tailspin } from "ldrs/react";
 
 function ChatActions({ showEmoji, setShowEmoji, textRef }) {
   const [message, setMessage] = useState("");
   const [localFiles, setLocalFiles] = useState([]);
-  const { activeChat, files } = useSelector((state) => state.chat);
+  const { activeChat, status } = useSelector((state) => state.chat);
   const { socket } = useSocket();
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -21,7 +23,9 @@ function ChatActions({ showEmoji, setShowEmoji, textRef }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setUploading(true);
     const uploaded_images = await uploadFiles(localFiles);
+    setUploading(false);
 
     dispatch(clearFiles());
 
@@ -53,9 +57,13 @@ function ChatActions({ showEmoji, setShowEmoji, textRef }) {
       />
       <Input setMessage={setMessage} message={message} textRef={textRef} />
       <Attachment setLocalFiles={setLocalFiles} />
-      <button type="submit">
-        <Send color="yellow" />
-      </button>
+      {uploading === true || status === "loading" ? (
+        <Tailspin size="20" stroke="5" speed="0.9" color="black" />
+      ) : (
+        <button type="submit">
+          <Send color="yellow" />
+        </button>
+      )}
     </form>
   );
 }

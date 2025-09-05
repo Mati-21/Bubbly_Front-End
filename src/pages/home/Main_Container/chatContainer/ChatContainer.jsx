@@ -1,6 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import Message from "./Message";
+import ImageDisplayer from "./ImageDisplayer";
+import VideoDisplayer from "./VideoDisplayer";
+import FileDisplayer from "./FileDisplayer";
+import { getFileType } from "../../../../utils/getFileType";
 
 function ChatContainer({ setShowEmoji }) {
   const { messages } = useSelector((state) => state.chat);
@@ -14,7 +18,7 @@ function ChatContainer({ setShowEmoji }) {
   return (
     <div
       onClick={() => setShowEmoji(false)}
-      className="flex-1 space-y-2 my-2 overflow-y-scroll  scrollbar relative px-2"
+      className="flex-1 space-y-2 my-2 overflow-y-scroll scrollbar relative px-2"
     >
       {messages?.map((message, i) => {
         const me = message.sender._id === user._id;
@@ -22,26 +26,24 @@ function ChatContainer({ setShowEmoji }) {
         return (
           <div key={i}>
             {/* Files */}
-            {message.files?.length > 0 ? (
+            {message.files?.length > 0 && (
               <div
                 className={`flex flex-col ${
                   me ? "items-end" : "items-start"
                 } gap-2 flex-wrap mt-2`}
               >
-                {message.files.map((fileObj, index) => (
-                  <div
-                    key={index}
-                    className="w-64 h-64 border rounded overflow-hidden"
-                  >
-                    <img
-                      src={fileObj.file.secure_url}
-                      alt="uploaded"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
+                {message.files.map((fileObj, index) => {
+                  const fileType = getFileType(fileObj.type);
+                  if (fileType === "image") {
+                    return <ImageDisplayer key={index} file={fileObj} />;
+                  } else if (fileType === "VIDEO") {
+                    return <VideoDisplayer key={index} file={fileObj} />;
+                  } else {
+                    return <FileDisplayer key={index} file={fileObj} />;
+                  }
+                })}
               </div>
-            ) : null}
+            )}
 
             {/* Text message */}
             {message?.message && (

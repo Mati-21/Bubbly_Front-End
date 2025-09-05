@@ -10,7 +10,7 @@ function Preview() {
   const [activeIndex, setActiveIndex] = useState(0);
   const dispatch = useDispatch();
   return (
-    <div className="flex-1 bg-gray-400 relative">
+    <div className="flex-1 bg-gray-400 relative ">
       <div className="absolute top-1 right-1 p-1 sm:top-5 sm:right-5 bg-white rounded-full sm:p-2 cursor-pointer shadow-lg">
         <X color="red" onClick={() => dispatch(clearFiles())} />
       </div>

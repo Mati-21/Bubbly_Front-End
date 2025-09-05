@@ -21,7 +21,7 @@ function MainContainer({ textRef }) {
     <div
       className={`h-screen ${
         activeChat?._id ? "flex flex-col col-span-12" : "hidden"
-      }  sm:col-span-7 md:col-span-8 lg:col-span-9  sm:flex flex-col relative`}
+      }  sm:col-span-7 md:col-span-8 lg:col-span-9  sm:flex flex-col relative `}
     >
       {/* <Preview /> */}
       <ChatHeader />
