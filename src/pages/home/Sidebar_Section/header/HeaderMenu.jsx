@@ -12,8 +12,13 @@ function HeaderMenu() {
     dispatch(setShowHeaderMenu());
   };
 
+  // Example user (change role to "system_admin" to test admin menu)
+  const User = {
+    role: "system_admin",
+  };
+
   return (
-    <div className="p-2 rounded-md absolute bg-gray-600 -bottom-[210px] right-0 max-w-lg min-w-[300px] w-full z-30">
+    <div className="p-2 rounded-md absolute bg-gray-600 top-full mt-2 right-0 max-w-lg min-w-[300px] w-full z-30 shadow-lg">
       {/* Triangle */}
       <div
         className="w-0 h-0 absolute -top-[9px] right-[34px]
@@ -24,7 +29,7 @@ function HeaderMenu() {
 
       {/* Menu items */}
       <ul className="list-none flex flex-col gap-2 text-white">
-        <li className="font-semibold text-sm p-2 bg-gary-500 hover:bg-gray-700 flex items-center gap-2  duration-300 transition-all cursor-pointer">
+        <li className="font-semibold text-sm p-2 bg-gray-500 hover:bg-gray-700 flex items-center gap-2 duration-300 transition-all cursor-pointer rounded-md">
           <span>
             <Settings />
           </span>
@@ -32,25 +37,27 @@ function HeaderMenu() {
         </li>
         <li
           onClick={() => openClose()}
-          className="font-semibold text-sm p-2 bg-gary-500 hover:bg-gray-700 flex items-center gap-2  duration-300 transition-all cursor-pointer"
+          className="font-semibold text-sm p-2 bg-gray-500 hover:bg-gray-700 flex items-center gap-2 duration-300 transition-all cursor-pointer rounded-md"
         >
           <span>
             <Users />
           </span>
           Create Group
         </li>
-        <li className="font-semibold text-sm p-2 bg-gary-500 hover:bg-gray-700 flex items-center gap-2 duration-300 transition-all cursor-pointer">
+        <li className="font-semibold text-sm p-2 bg-gray-500 hover:bg-gray-700 flex items-center gap-2 duration-300 transition-all cursor-pointer rounded-md">
           <span>
             <Megaphone />
           </span>
           Create Channel
         </li>
-        <li className="font-semibold text-sm p-2 bg-gary-500 hover:bg-gray-700 flex items-center gap-2  duration-300 transition-all cursor-pointer">
-          <span>
-            <Shield />
-          </span>
-          Admin Dashboard
-        </li>
+        {User.role === "system_admin" && (
+          <li className="font-semibold text-sm p-2 bg-gray-500 hover:bg-gray-700 flex items-center gap-2 duration-300 transition-all cursor-pointer rounded-md">
+            <span>
+              <Shield />
+            </span>
+            Admin Dashboard
+          </li>
+        )}
       </ul>
     </div>
   );
