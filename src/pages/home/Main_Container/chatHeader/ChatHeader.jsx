@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearActiveChat } from "../../../../feature/chat/chatSlice";
 import { checkOnline } from "../../../../utils/checkOnline";
 import { getCurrentUserId } from "../../../../utils/getCurrentUserId";
+import { setSelectedUserProfile } from "../../../../feature/ui/ui";
 
 function ChatHeader() {
   const { activeChat, onlineUsers } = useSelector((state) => state.chat);
@@ -24,7 +25,10 @@ function ChatHeader() {
         <div onClick={handleActiveChat} className="sm:hidden">
           <ArrowLeftIcon />
         </div>
-        <div className="size-10 cursor-pointer rounded-full overflow-hidden ">
+        <div
+          onClick={() => dispatch(setSelectedUserProfile())}
+          className="size-10 cursor-pointer rounded-full overflow-hidden "
+        >
           <img
             src={activeChat.picture[0]}
             alt=""

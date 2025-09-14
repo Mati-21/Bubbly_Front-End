@@ -6,6 +6,7 @@ const initialState = {
   openFullProfile: false,
   createGroup: false,
   showHeaderMenu: false,
+  selectedUserProfile: false,
 };
 
 export const uiSlice = createSlice({
@@ -30,6 +31,9 @@ export const uiSlice = createSlice({
     setShowHeaderMenu: (state) => {
       state.showHeaderMenu = !state.showHeaderMenu;
     },
+    setSelectedUserProfile: (state) => {
+      state.selectedUserProfile = !state.selectedUserProfile;
+    },
   },
 });
 
@@ -40,5 +44,6 @@ export const {
   setCloseCreateGroup,
   setOpenFullProfile,
   setShowHeaderMenu,
+  setSelectedUserProfile,
 } = uiSlice.actions;
 export default uiSlice.reducer;

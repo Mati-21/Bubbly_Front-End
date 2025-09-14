@@ -12,14 +12,19 @@ import { updateMessage, updateOnlineUsers } from "../../feature/chat/chatSlice";
 import UserProfile from "../../components/general_ui_components/UserProfile";
 import FullScrenProfile from "../../components/general_ui_components/FullScrenProfile";
 import CreateGroup from "./CreateGroup/CreateGroup";
+import SelectedUserProfile from "../../components/general_ui_components/SelectedUserProfile";
 
 function Home() {
   const dispatch = useDispatch();
   const { activeChat } = useSelector((state) => state.chat);
 
-  const { mobileMenu, openProfile, openFullProfile, createGroup } = useSelector(
-    (state) => state.ui
-  );
+  const {
+    mobileMenu,
+    openProfile,
+    openFullProfile,
+    createGroup,
+    selectedUserProfile,
+  } = useSelector((state) => state.ui);
 
   // local states
   const { user } = useSelector((state) => state.auth);
@@ -59,6 +64,9 @@ function Home() {
     <div className="h-screen min-h-screen w-screen min-w-[280px] grid grid-cols-12 bg bg-slate-600 relative">
       {/* full screen profile */}
       {openFullProfile ? <FullScrenProfile /> : null}
+
+      {/* selevtedUser Profile */}
+      {selectedUserProfile && <SelectedUserProfile />}
 
       {/* profile picture */}
       {openProfile ? <UserProfile /> : null}
