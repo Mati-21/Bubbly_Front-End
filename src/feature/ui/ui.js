@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { act } from "react";
 
 const initialState = {
   mobileMenu: false,
@@ -6,7 +7,7 @@ const initialState = {
   openFullProfile: false,
   createGroup: false,
   showHeaderMenu: false,
-  selectedUserProfile: false,
+  selectedUserProfile: "",
 };
 
 export const uiSlice = createSlice({
@@ -31,8 +32,11 @@ export const uiSlice = createSlice({
     setShowHeaderMenu: (state) => {
       state.showHeaderMenu = !state.showHeaderMenu;
     },
-    setSelectedUserProfile: (state) => {
-      state.selectedUserProfile = !state.selectedUserProfile;
+    setSelectedUserProfile: (state, action) => {
+      state.selectedUserProfile = action.payload;
+    },
+    closeSelectedUserProfile: (state) => {
+      state.selectedUserProfile = null;
     },
   },
 });
@@ -45,5 +49,6 @@ export const {
   setOpenFullProfile,
   setShowHeaderMenu,
   setSelectedUserProfile,
+  closeSelectedUserProfile,
 } = uiSlice.actions;
 export default uiSlice.reducer;

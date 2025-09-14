@@ -26,7 +26,7 @@ function ChatHeader() {
           <ArrowLeftIcon />
         </div>
         <div
-          onClick={() => dispatch(setSelectedUserProfile())}
+          onClick={() => dispatch(setSelectedUserProfile(activeChat._id))}
           className="size-10 cursor-pointer rounded-full overflow-hidden "
         >
           <img
