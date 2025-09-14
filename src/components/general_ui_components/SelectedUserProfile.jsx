@@ -63,7 +63,10 @@ function SelectedUserProfile() {
           {/* Action buttons (top-right) */}
           <div className="absolute top-3 right-3 flex space-x-2">
             <button className="bg-white/80 p-2 rounded-full shadow">
-              <X className="text-gray-700" />
+              <X
+                onClick={() => dispatch(closeSelectedUserProfile())}
+                className="text-gray-700"
+              />
             </button>
           </div>
         </div>
@@ -73,7 +76,7 @@ function SelectedUserProfile() {
           {/* Avatar + Name */}
           <div className="flex items-center space-x-3">
             <img
-              src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"
+              src={activeChat.picture[0]}
               alt="Avatar"
               className="w-14 h-14 rounded-full object-cover"
             />
