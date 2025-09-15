@@ -1,47 +1,27 @@
 import { useDispatch, useSelector } from "react-redux";
 import { closeSelectedUserProfile } from "../../feature/ui/ui";
 
-// function SelectedUserProfile() {
-//   const dispatch = useDispatch();
-//   const { activeChat } = useSelector((state) => state.chat);
-//   console.log(activeChat);
-
-//   return (
-//     <div
-//       onClick={() => dispatch(closeSelectedUserProfile())}
-//       className="absolute inset-0 flex justify-center items-center bg-black/20 z-40"
-//     >
-//       {/* Modal content */}
-//       <div
-//         onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside modal
-//         className="w-[400px]  bg-gray-50 flex flex-col  rounded-xl shadow-lg"
-//       >
-//         <div className="w-full">
-//           <img
-//             src={activeChat.picture[0]}
-//             className="h-[400px] w-full object-cover bg-top"
-//             alt=""
-//           />
-//         </div>
-//         <div className="flex-1">
-//           <p>Some profile details go here...</p>
-//           <p>Some profile details go here...</p>
-//           <p>Some profile details go here...</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default SelectedUserProfile;
-
 import { FiPhone, FiMessageSquare, FiHeart, FiShare2 } from "react-icons/fi";
-import { X } from "lucide-react";
+import { ArrowLeftIcon, ArrowRightIcon, X } from "lucide-react";
+import { useState } from "react";
 
 function SelectedUserProfile() {
   const dispatch = useDispatch();
+  const [selectedPic, setSelectedPic] = useState(0);
   const { activeChat } = useSelector((state) => state.chat);
-  console.log(activeChat);
+  const profile = activeChat.picture;
+
+  const forward = () => {
+    console.log(activeChat);
+    if (selectedPic < profile.length - 1) {
+      setSelectedPic((prev) => prev + 1);
+    }
+  };
+  const backward = () => {
+    if (selectedPic > 0) {
+      setSelectedPic((prev) => prev - 1);
+    }
+  };
 
   return (
     <div
@@ -55,7 +35,7 @@ function SelectedUserProfile() {
         {/* Top image */}
         <div className="relative">
           <img
-            src={activeChat.picture[0]}
+            src={activeChat.picture[selectedPic]}
             alt="Profile"
             className="w-full h-64 object-cover bg-top"
           />
@@ -65,6 +45,22 @@ function SelectedUserProfile() {
             <button className="bg-white/80 p-2 rounded-full shadow">
               <X
                 onClick={() => dispatch(closeSelectedUserProfile())}
+                className="text-gray-700"
+              />
+            </button>
+          </div>
+          <div className="absolute top-1/2 right-3 flex space-x-2 ">
+            <button className="bg-white/80 p-2 rounded-full shadow">
+              <ArrowRightIcon
+                onClick={() => forward()}
+                className="text-gray-700"
+              />
+            </button>
+          </div>
+          <div className="absolute top-1/2 left-3 flex space-x-2">
+            <button className="bg-white/80 p-2 rounded-full shadow">
+              <ArrowLeftIcon
+                onClick={() => backward()}
                 className="text-gray-700"
               />
             </button>
