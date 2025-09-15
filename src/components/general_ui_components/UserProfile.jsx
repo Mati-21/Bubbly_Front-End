@@ -27,14 +27,16 @@ function UserProfile() {
   };
 
   return (
-    <div className="absolute inset-0 flex bg-gray-900/70 z-20 justify-center">
+    <div className="absolute inset-0 flex text-white bg-gray-900/70 z-20 justify-center">
       <div className="min-w-xs max-w-lg h-fit mt-36  w-full bg-gray-600 lg:px-8 px-2 py-4 rounded-md">
         {/* Header for the profile */}
         <div className="w-full flex items-center justify-between">
-          <h1 className="font-bold lg:text-xl text-sm">My Profile</h1>
+          <h1 className="font-bold lg:text-xl text-sm lg:text-white">
+            My Profile
+          </h1>
           <div className="flex items-center lg:gap-4 gap-2">
             {(uploadingStatus || isUploadingProfile) && (
-              <Tailspin size="20" stroke="5" speed="0.9" color="green" />
+              <Tailspin size="20" stroke="5" speed="0.9" color="white" />
             )}
             {showSave && (
               <Check
@@ -45,13 +47,13 @@ function UserProfile() {
             )}
 
             {/* edit pen */}
-            <div className=" bg-slate-200/30 rouded lg:size-10 size-6 p-2 rounded-full flex items-center justify-center">
+            <div className=" bg-slate-200/30 rouded lg:size-8 size-6 p-2 rounded-full flex items-center justify-center">
               <Pen strokeWidth={3} size={20} className="cursor-pointer " />
             </div>
             <X
               strokeWidth={3}
               onClick={() => dispatch(setOpenProfile(false))}
-              className="cursor-pointer bg-slate-200/30 lg:size-10 size-6 p-2 rounded-full"
+              className="cursor-pointer bg-slate-200/30 lg:size-8 size-6 p-2 rounded-full"
             />
           </div>
         </div>
